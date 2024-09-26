@@ -2,6 +2,8 @@
 CSCE 483 Capstone Repository
 
 
+
+
 ## Setup Instructions
 1. Make sure you have Node.js installed
 2. Clone the repo
@@ -20,12 +22,17 @@ npm install
 npm install
 ```
 
+
+
+
 ## Running Backend Instructions
 1. cd into /backend
 2. Run the command
 ```bash
 npm start
 ```
+
+
 
 
 ## Running Frontend Instructions
