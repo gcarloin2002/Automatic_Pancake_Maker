@@ -2,6 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 
+const test_routes = require('./routes/test_routes');
+
 
 const app = express();
 app.use(express.json());
@@ -18,3 +20,5 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 
 module.exports = app;
+
+app.use('/api/test', test_routes);
