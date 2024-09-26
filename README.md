@@ -1,6 +1,8 @@
 # Automatic_Pancake_Maker
 CSCE 483 Capstone Repository
-
+<br />
+<br />
+<br />
 
 
 
@@ -21,7 +23,9 @@ npm install
 ```bash
 npm install
 ```
-
+<br />
+<br />
+<br />
 
 
 
@@ -31,7 +35,9 @@ npm install
 ```bash
 npm start
 ```
-
+<br />
+<br />
+<br />
 
 
 
