@@ -34,7 +34,7 @@ npm start
 ```bash
 npm run build
 ```
-2. Run the command
+3. Run the command
 ```bash
 npm start
 ```
