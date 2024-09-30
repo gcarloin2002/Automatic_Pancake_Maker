@@ -2,19 +2,6 @@ const express = require('express');
 const db = require('../db_setup'); 
 const router = express.Router();
 
-// Retrieves account via id
-router.get('/:id', async function get_account(req, res) {
-  const account_id = req.params.id;
-  try {
-    const result = await db.one('SELECT * FROM account WHERE Account_ID = $1', [account_id]);
-    res.json(result);
-  } catch (err) {
-    console.error('Error executing query', err);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-
 
 // Retrieves account via username
 router.get('/username/:username', async function get_account_by_username(req, res) {
@@ -27,6 +14,34 @@ router.get('/username/:username', async function get_account_by_username(req, re
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+
+// Retrieves account via email
+router.get('/email/:email', async function get_account_by_email(req, res) {
+  const email = req.params.email;
+  try {
+    const result = await db.one('SELECT * FROM account WHERE Account_Email = $1', [email]);
+    res.json(result);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+// Retrieves account via id
+router.get('/:id', async function get_account(req, res) {
+  const account_id = req.params.id;
+  try {
+    const result = await db.one('SELECT * FROM account WHERE Account_ID = $1', [account_id]);
+    res.json(result);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 
