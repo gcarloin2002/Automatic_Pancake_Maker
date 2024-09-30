@@ -28,4 +28,28 @@ router.get('/username/:username', async function get_account_by_username(req, re
   }
 });
 
+
+
+// Creates a new account 
+router.post('/', async function create_account(req, res) {
+  const { account_username, account_password, account_first_name, account_last_name, account_email } = req.body;
+
+  try {
+    const result = await db.one(
+      `INSERT INTO account (Account_Username, Account_Password, Account_First_Name, Account_Last_Name, Account_Email) 
+       VALUES ($1, $2, $3, $4, $5) 
+       RETURNING *`, 
+      [account_username, account_password, account_first_name, account_last_name, account_email]
+    );
+    res.status(201).json(result);  // Respond with the newly created account
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+
+
 module.exports = router;
