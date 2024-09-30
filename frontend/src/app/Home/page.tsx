@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="page">
       <h1>Home Page</h1>  
       <Link href="/">Go to Welcome Page</Link>
       <Link href="/Order">Go to Order Page</Link>
