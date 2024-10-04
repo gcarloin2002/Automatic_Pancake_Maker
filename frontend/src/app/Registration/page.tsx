@@ -1,6 +1,7 @@
 "use client"; 
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import "./styles.css";
 import { hashPassword } from '../global_helpers';
 import * as helpers from './helpers'
@@ -9,20 +10,21 @@ import { useState } from 'react';
 
 export default function RegistrationPage() {
 
+  const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
   const [email, setEmail] = useState('');
-  //const [usedEmail, setUsedEmail] = useState(false)
+  const [usedEmail, setUsedEmail] = useState(false)
 
   const [username, setUsername] = useState('');
-  //const [usedUsername, setUsedUsername] = useState(false)
+  const [usedUsername, setUsedUsername] = useState(false)
 
 
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  //const [unmatchedPasswords, setUnmatchedPasswords] = useState('')
+  const [matchedPasswords, setMatchedPasswords] = useState(true)
 
 
 
@@ -30,48 +32,70 @@ export default function RegistrationPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    let invalidForm = false
 
-    
+     
+    // First check if username hasn't been used
     try {
+      const usernameExists = await helpers.checkUsernameExists(username); 
+      setUsedUsername(usernameExists ? true : false)
 
-      // First check if username hasn't been used
-      const usernameExists = await helpers.checkUsernameExists(baseUrl, username); 
-      console.log("Username Exists: " + usernameExists)
+      if (usernameExists){
+        invalidForm = true
+      }
+
+       
+
+    } catch (error) {
+      console.error('Failed to fetch account details:', error);
+    }
+
+ 
+     
+    // Then check if email hasn't been used
+    try {
+      const emailExists = await helpers.checkEmailExists(email); 
+      setUsedEmail(emailExists ? true : false)
+
+      if (emailExists){
+        invalidForm = true
+      }
+
+       
 
     } catch (error) {
       console.error('Failed to fetch account details:', error);
     }
 
 
+    
 
-    try {
+    // Check if passwords match
+    setMatchedPasswords(password === password2 ? true : false)
+    if (password !== password2){
+      invalidForm = true
+    }
+
+     
+
+
+
+    // If all registration boxes are valid
+    if (!invalidForm){
       
-      // Then check if email hasn't been used
-      const emailExists = await helpers.checkEmailExists(baseUrl, email); 
-      console.log("Email Exists: " + emailExists)
+      const formData = {
+        account_first_name: firstName,
+        account_last_name: lastName,
+        account_email: email,
+        account_username: username,
+        account_password: hashPassword(password, username) 
+      };
 
-    } catch (error) {
-      console.error('Failed to fetch account details:', error);
+      // Creates new account
+      helpers.createNewAccount(formData)
+      await router.push('/Login');
     }
 
-
-
-    
-
-
-
-
-
-    const formData = {
-      firstName,
-      lastName,
-      email,
-      username,
-      hashedPassword: hashPassword(password, "7") 
-    };
-
-    console.log(formData)
   };
 
   
@@ -100,6 +124,7 @@ export default function RegistrationPage() {
         />
 
 
+        {usedEmail && <p>Email already in use</p>}
         <label>Email</label>
         <input
           type="email"
@@ -108,6 +133,7 @@ export default function RegistrationPage() {
           required
         />
 
+        {usedUsername && <p>Username already in use</p>}  
         <label>Username</label>
         <input
           type="text"
@@ -124,6 +150,7 @@ export default function RegistrationPage() {
           required
         />
 
+        {!matchedPasswords && <p>Passwords do not match</p>}  
         <label>Re-Enter Password</label>
         <input
           type="password"
