@@ -2,7 +2,6 @@
 const express = require('express');
 const cors = require('cors');
 
-const test_routes = require('./routes/test_routes');
 const account_routes = require('./routes/account_routes')
 
 const app = express();
@@ -21,5 +20,4 @@ app.listen(PORT, '0.0.0.0', () => {
 
 module.exports = app;
 
-app.use('/api/test', test_routes);
 app.use('/api/account', account_routes);
