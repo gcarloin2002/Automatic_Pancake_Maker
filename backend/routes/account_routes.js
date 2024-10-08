@@ -46,6 +46,7 @@ router.get('/:id', async function get_account(req, res) {
 
 
 // Creates a new account 
+/*
 router.post('/', async function create_account(req, res) {
   const { account_username, account_password, account_first_name, account_last_name, account_email } = req.body;
 
@@ -62,6 +63,34 @@ router.post('/', async function create_account(req, res) {
     res.status(500).send('Internal Server Error');
   }
 });
+*/
+
+router.post('/', async function create_account(req, res) {
+  const { account_username, account_password, account_first_name, account_last_name, account_email } = req.body;
+
+  try {
+    // Step 1: Get the maximum Account_ID
+    const maxIdResult = await db.oneOrNone(
+      `SELECT MAX(Account_ID) as max_id FROM account`
+    );
+    const newAccountId = (maxIdResult && maxIdResult.max_id) ? maxIdResult.max_id + 1 : 1;
+
+    // Step 2: Insert new account with Account_ID incremented by 1
+    const result = await db.one(
+      `INSERT INTO account (Account_ID, Account_Username, Account_Password, Account_First_Name, Account_Last_Name, Account_Email) 
+       VALUES ($1, $2, $3, $4, $5, $6) 
+       RETURNING *`, 
+      [newAccountId, account_username, account_password, account_first_name, account_last_name, account_email]
+    );
+
+    res.status(201).json(result);  // Respond with the newly created account
+    
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 
