@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import "./styles.css";
+import { hashPassword } from '../global_helpers';
 
 export default function LoginPage() {
 
@@ -12,10 +13,31 @@ export default function LoginPage() {
 
   const login_click = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-
-    console.log("Login Button Clicked!")
-    setPassword("")
-  }
+  
+    const hashedPassword = hashPassword(password, username);
+    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const completeUrl = baseUrl + "/api/account/login"
+    const response = await fetch(completeUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ login: username, hashedPassword }),  // Here username could be email or username
+    });
+  
+    const data = await response.json();
+  
+    if (response.ok) {
+      console.log("Login Successful");
+    } else {
+      console.log("Login Failed:", data.message);
+    }
+  
+    // Clear password field
+    setPassword("");
+  };
+  
+  
 
   return (
     <div className="page">
@@ -30,7 +52,7 @@ export default function LoginPage() {
 
 
       <form onSubmit={login_click}>
-        <label>Username or Password</label>
+        <label>Username or Email</label>
         <input
           type="text"
           value={username}

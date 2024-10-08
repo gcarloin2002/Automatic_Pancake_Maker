@@ -64,6 +64,41 @@ router.post('/', async function create_account(req, res) {
 });
 
 
+// Helper function to check if input is an email
+function isEmail(input) {
+  return /\S+@\S+\.\S+/.test(input);
+}
+//Login checks if account exists and verifies hashed password
+router.post('/login', async function login(req, res) {
+  const { login, hashedPassword } = req.body;  // login can be username or email
+  // console.log(hashedPassword);
+  if (!login || !hashedPassword) {
+    return res.status(400).json({ message: "Missing login or hashedPassword" });
+  }
+
+  try {
+    let account;
+
+
+    if (isEmail(login)) {
+      account = await db.one('SELECT * FROM account WHERE Account_Email = $1', [login]);
+    } else {
+      account = await db.one('SELECT * FROM account WHERE Account_Username = $1', [login]);
+    }
+
+    if (hashedPassword === account.account_password) {
+      res.status(200).json({ message: 'Login successful' });
+      console.log("yay")
+    } else {
+      res.status(401).json({ message: 'Invalid login or password' });
+      console.log("nay")
+    }
+  } catch (err) {
+    console.error('Error executing query or user not found', err);
+    res.status(500).json({ message: 'Login failed. Please check your credentials and try again.' });
+    console.log("bruh")
+  }
+});
 
 
 
