@@ -4,36 +4,27 @@ import Link from 'next/link';
 import { useState } from 'react';
 import "./styles.css";
 import { hashPassword } from '../global_helpers';
+import *  as loginHelpers from './login_helpers';
 
 export default function LoginPage() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [login, setLogin] = useState(false);
 
 
-  const login_click = async (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
+  const login_click = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   
     const hashedPassword = hashPassword(password, username);
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    const completeUrl = baseUrl + "/api/account/login"
-    const response = await fetch(completeUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ login: username, hashedPassword }),  // Here username could be email or username
-    });
-  
-    const data = await response.json();
-  
-    if (response.ok) {
-      console.log("Login Successful");
-    } else {
-      console.log("Login Failed:", data.message);
+    const loginStatus = await loginHelpers.checkLogin(hashedPassword, username);
+    setLogin(loginStatus ? true : false);
+    if (login) {
+      console.log("Login Success!");
     }
-  
-    // Clear password field
+    else {
+      console.log("Login failed!");
+    }
     setPassword("");
   };
   

@@ -117,15 +117,12 @@ router.post('/login', async function login(req, res) {
 
     if (hashedPassword === account.account_password) {
       res.status(200).json({ message: 'Login successful' });
-      console.log("yay")
     } else {
       res.status(401).json({ message: 'Invalid login or password' });
-      console.log("nay")
     }
   } catch (err) {
     console.error('Error executing query or user not found', err);
     res.status(500).json({ message: 'Login failed. Please check your credentials and try again.' });
-    console.log("bruh")
   }
 });
 
