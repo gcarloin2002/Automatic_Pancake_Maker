@@ -1,49 +1,49 @@
-"use client"; 
+"use client";
 
 import Link from 'next/link';
 import { useState } from 'react';
-import "./styles.css";
+import { useRouter } from 'next/navigation';  // Next.js Router for redirect
 import { signIn } from 'next-auth/react';
-
+import "./styles.css";
 
 export default function LoginPage() {
-
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);  // Loading state
 
   const login_click = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    setLoading(true);  // Start loading
+
     const result = await signIn('credentials', {
       redirect: false,
       username,
       password,
     });
 
+    setLoading(false);  // Stop loading
+
     if (result?.error) {
       setError('Login failed. Please check your credentials and try again.');
-      console.log(error);
     } else {
       console.log('Login successful!');
+      router.push('/Diagnostics');  // Redirect to Diagnostics page after successful login
     }
 
-    setPassword('');
+    setPassword('');  // Clear password input
   };
-  
-  
 
   return (
     <div className="page">
-      <h1>Login Page</h1>  
+      <h1>Login Page</h1>
 
-      {/* Links to different pages */}
       <div className="page">
         <Link href="/Home">Go to Home Page</Link>
         <Link href="/Registration">Go to Registration Page</Link>
         <Link href="/">Go to Welcome Page</Link>
       </div>
-
 
       <form onSubmit={login_click}>
         <label>Username or Email</label>
@@ -61,10 +61,13 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <input type="submit" value="Login" />
+
+        {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error message */}
+
+        <input type="submit" value={loading ? "Logging in..." : "Login"} disabled={loading} /> {/* Show loading state */}
       </form>
 
-     
+      {loading && <p>Loading...</p>}  {/* Show loading spinner */}
     </div>
   );
 }
