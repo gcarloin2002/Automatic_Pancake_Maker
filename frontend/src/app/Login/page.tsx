@@ -3,29 +3,32 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import "./styles.css";
-import { hashPassword } from '../global_helpers';
-import *  as loginHelpers from './login_helpers';
+import { signIn } from 'next-auth/react';
+
 
 export default function LoginPage() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [login, setLogin] = useState(false);
-
+  const [error, setError] = useState('');
 
   const login_click = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
-    const hashedPassword = hashPassword(password, username);
-    const loginStatus = await loginHelpers.checkLogin(hashedPassword, username);
-    setLogin(loginStatus ? true : false);
-    if (login) {
-      console.log("Login Success!");
+    
+    const result = await signIn('credentials', {
+      redirect: false,
+      username,
+      password,
+    });
+
+    if (result?.error) {
+      setError('Login failed. Please check your credentials and try again.');
+      console.log(error);
+    } else {
+      console.log('Login successful!');
     }
-    else {
-      console.log("Login failed!");
-    }
-    setPassword("");
+
+    setPassword('');
   };
   
   
