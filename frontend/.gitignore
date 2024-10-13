@@ -35,9 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-<<<<<<< HEAD
 
 .env
-=======
-.env
->>>>>>> 38d0b24454841ebc577b8428fae879ba6dbbdb3b
