@@ -1,5 +1,7 @@
-// app/layout.tsx
-import './globals.css'; // Optional, for global styles
+"use client"; // Ensures this layout runs as a Client Component
+
+import './globals.css';
+import { SessionProvider } from 'next-auth/react';
 
 export default function RootLayout({
   children,
@@ -9,8 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Header, footer, or other global elements can go here */}
-        {children}  {/* This renders the page content */}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

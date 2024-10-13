@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-// import { hashPassword } from '../../../app/global_helpers';
 
 export default NextAuth({
   providers: [
@@ -11,10 +10,9 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        // Hash the password on the frontend before sending it to the backend
-        // const hashedPassword = hashPassword(credentials.password, credentials.username);
-
-        const res = await fetch('http://localhost:4000/api/account/login', {
+        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const fetchUrl = baseUrl + '/api/account/login';
+        const res = await fetch(fetchUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -26,7 +24,6 @@ export default NextAuth({
         const user = await res.json();
 
         if (res.ok && user) {
-          // Return user object with role if successful
           return { id: user.id, username: user.username, role: user.role };
         } else {
           return null;
