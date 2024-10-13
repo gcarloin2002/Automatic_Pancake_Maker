@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import "./styles.css";
 
+// Starting order
+
+
 export default function OrderPage() {
   return (
     <div className="page">
