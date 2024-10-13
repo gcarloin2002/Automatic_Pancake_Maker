@@ -1,112 +1,65 @@
-"use client"; 
+"use client";
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import "./styles.css";
 import { hashPassword } from '../global_helpers';
-import * as helpers from './helpers'
 
-import { useState } from 'react';
 
 export default function RegistrationPage() {
-
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-
   const [email, setEmail] = useState('');
-  const [usedEmail, setUsedEmail] = useState(false)
-
   const [username, setUsername] = useState('');
-  const [usedUsername, setUsedUsername] = useState(false)
-
-
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [matchedPasswords, setMatchedPasswords] = useState(true)
-
-
-
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
     e.preventDefault();
-    let invalidForm = false
-
-     
-    // First check if username hasn't been used
-    try {
-      const usernameExists = await helpers.checkUsernameExists(username); 
-      setUsedUsername(usernameExists ? true : false)
-
-      if (usernameExists){
-        invalidForm = true
-      }
-
-       
-
-    } catch (error) {
-      console.error('Failed to fetch account details:', error);
-    }
-
- 
-     
-    // Then check if email hasn't been used
-    try {
-      const emailExists = await helpers.checkEmailExists(email); 
-      setUsedEmail(emailExists ? true : false)
-
-      if (emailExists){
-        invalidForm = true
-      }
-
-       
-
-    } catch (error) {
-      console.error('Failed to fetch account details:', error);
-    }
-
-
-    
 
     // Check if passwords match
-    setMatchedPasswords(password === password2 ? true : false)
-    if (password !== password2){
-      invalidForm = true
+    if (password !== password2) {
+      setError('Passwords do not match');
+      return;
     }
+    const hashedPassword = hashPassword(password, username);
 
-     
-
-
-
-    // If all registration boxes are valid
-    if (!invalidForm){
-      
-      const formData = {
+    // Send registration data to the API
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         account_first_name: firstName,
         account_last_name: lastName,
         account_email: email,
         account_username: username,
-        account_password: hashPassword(password, username) 
-      };
+        account_password: hashedPassword,
+      }),
+    });
 
-      // Creates new account
-      helpers.createNewAccount(formData)
-      await router.push('/Login');
+    if (res.ok) {
+      router.push('/Login');  // Redirect to login after successful registration
+    } else {
+      const errorData = await res.json();
+      setError(errorData.message);
     }
-
   };
 
-  
   return (
     <div className="page">
       <h1>Registration Page</h1>
-      <Link href="/">Go to Welcome Page</Link>
-      <Link href="/Login">Go to Login Page</Link>
 
+      <div className="page">
+        <Link href="/Home">Go to Home Page</Link>
+        <Link href="/Login">Go to Login Page</Link>
+        <Link href="/">Go to Welcome Page</Link>
+      </div>
 
-      <form className="page" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>First Name</label>
         <input
           type="text"
@@ -123,8 +76,6 @@ export default function RegistrationPage() {
           required
         />
 
-
-        {usedEmail && <p>Email already in use</p>}
         <label>Email</label>
         <input
           type="email"
@@ -133,7 +84,6 @@ export default function RegistrationPage() {
           required
         />
 
-        {usedUsername && <p>Username already in use</p>}  
         <label>Username</label>
         <input
           type="text"
@@ -150,8 +100,7 @@ export default function RegistrationPage() {
           required
         />
 
-        {!matchedPasswords && <p>Passwords do not match</p>}  
-        <label>Re-Enter Password</label>
+        <label>Confirm Password</label>
         <input
           type="password"
           value={password2}
@@ -159,10 +108,10 @@ export default function RegistrationPage() {
           required
         />
 
-        <input type="submit" value="Submit" />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        
+        <input type="submit" value="Register" />
       </form>
-
-
     </div>
   );
 }
