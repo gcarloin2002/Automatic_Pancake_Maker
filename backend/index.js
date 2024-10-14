@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const account_routes = require('./routes/account_routes')
+const account_order_routes = require('./routes/account_order_routes')
 
 const app = express();
 app.use(express.json());
@@ -21,3 +22,4 @@ app.listen(PORT, '0.0.0.0', () => {
 module.exports = app;
 
 app.use('/api/account', account_routes);
+app.use('/api/account_order', account_order_routes);
