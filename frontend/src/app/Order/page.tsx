@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import "../../styles/Order.css";
 
+import { fetchPrevOrders } from '@/pages/api/order';
+import { createNewOrder } from '@/pages/api/order';
+
 // Define an interface for the order structure
 interface PrevOrderData {
   ao_id: number;     // Assuming ao_id is a number
@@ -15,30 +18,55 @@ interface PrevOrderData {
 }
 
 export default function OrderPage() {
-  const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]); // State to hold previous orders
-  const accountId = 13; // Replace with actual logic to get the account_id dynamically
+  const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]); 
+  const [size, setSize] = useState(5);
+  const [amount, setAmount] = useState(1);
+
+  const account_id = 13; // REPLACE EVENTUALLY
+  const machine_id = 1; // REPLACE EVENTUALLY
 
   // Fetch previous orders when the component mounts
   useEffect(() => {
-    const fetchPrevOrders = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/account_order/${accountId}`); // Adjust the API endpoint as needed
-        if (!response.ok) {
-          throw new Error('Failed to fetch orders');
-        }
-        const data = await response.json();
-        setPrevOrders(data); // Store fetched orders in state
-      } catch (error) {
-        console.error('Error fetching previous orders:', error);
+
+    // Define an async function to fetch the data
+    const getPrevOrders = async () => {
+      const orders = await fetchPrevOrders(account_id); // Fetch previous orders
+      if (orders) { // Ensure data exists before setting state
+        setPrevOrders(orders);
       }
     };
 
-    fetchPrevOrders();
-  }, []); // Dependency array to fetch orders when accountId changes
+    getPrevOrders(); // Call the async function
+  }, [account_id]); // Dependency array to re-fetch orders when accountId changes
+
+
+  const confirmButtonClick = async () => {
+    const orderData = {
+      account_id: account_id,
+      machine_id: machine_id,
+      ao_amount: amount,
+      ao_size: size,
+    };
+  
+    try {
+      const newOrder = await createNewOrder(orderData); // Call the createNewOrder function
+      if (newOrder) {
+        console.log('Order successfully created:', newOrder);
+      } else {
+        console.log('Failed to create order.');
+      }
+    } catch (error) {
+      console.error('Error during order creation:', error);
+    }
+  };
+  
+
+ 
+
 
   return (
     <div className="Order">
-      <Link href="/Home">Go to Home Page</Link> 
+      <Link href="/Home"> {"<-Back"} </Link> 
       <h1>Order Again</h1>  
 
       <div className="PrevOrders">
@@ -46,6 +74,52 @@ export default function OrderPage() {
           <PrevOrder key={order.ao_id} amount={order.ao_amount} size={order.ao_size} />
         ))}
       </div>
+
+      <div className="lower-order-section">
+        <div className="create-new-order">
+          <h1>Create New Order</h1>
+
+          {/* Dropdown for Size */}
+          <label htmlFor="sizeDropdown">Select Size</label>
+          <select
+            id="sizeDropdown"
+            value={size}
+            onChange={(e) => setSize(Number(e.target.value))} // Convert to number
+            required
+          >
+            <option value={5}>5 Inch</option>
+            <option value={6}>6 Inch</option>
+            <option value={7}>7 Inch</option>
+          </select>
+
+          {/* Dropdown for Amount */}
+          <label htmlFor="amountDropdown">Select Amount</label>
+          <select
+            id="amountDropdown"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))} // Convert to number
+            required
+          >
+            <option value={1}>1 Count</option>
+            <option value={2}>2 Count</option>
+            <option value={3}>3 Count</option>
+            <option value={4}>4 Count</option>
+            <option value={5}>5 Count</option>
+          </select>
+
+        </div>
+
+        <div className="finalize-order">
+          <h1>Final Order</h1>
+          <p>{size}-Inch, {amount} Count</p>
+        </div>
+      </div>
+
+      <button onClick={confirmButtonClick}>
+        Confirm
+      </button>
+
+
     </div>
   );
 }
