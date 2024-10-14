@@ -3,21 +3,25 @@
 import PrevOrder from '@/components/PrevOrder';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import "../../styles/Order.css";
 
-import { fetchPrevOrders } from '@/pages/api/order';
-import { createNewOrder } from '@/pages/api/order';
+import { fetchPrevOrders, createNewOrder } from '@/pages/api/order';
+
 
 // Define an interface for the order structure
 interface PrevOrderData {
-  ao_id: number;     // Assuming ao_id is a number
-  ao_amount: number; // Assuming ao_amount is a number
-  ao_size: number;   // Assuming ao_size is a number
-  ao_timestamp: string; // Assuming ao_timestamp is a string
-  ao_status: string;  // Assuming ao_status is a string
+  ao_id: number;    
+  ao_amount: number; 
+  ao_size: number;   
+  ao_timestamp: string; 
+  ao_status: string; 
 }
 
 export default function OrderPage() {
+
+  const router = useRouter();
+
   const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]); 
   const [size, setSize] = useState(5);
   const [amount, setAmount] = useState(1);
@@ -27,17 +31,22 @@ export default function OrderPage() {
 
   // Fetch previous orders when the component mounts
   useEffect(() => {
-
-    // Define an async function to fetch the data
     const getPrevOrders = async () => {
-      const orders = await fetchPrevOrders(account_id); // Fetch previous orders
+      const orders = await fetchPrevOrders(account_id); 
       if (orders) { // Ensure data exists before setting state
         setPrevOrders(orders);
       }
     };
 
     getPrevOrders(); // Call the async function
-  }, [account_id]); // Dependency array to re-fetch orders when accountId changes
+  }, [account_id]); 
+
+
+
+  const handleOrderSelection = (selectedSize: number, selectedAmount: number) => {
+    setSize(selectedSize);
+    setAmount(selectedAmount);
+  };
 
 
   const confirmButtonClick = async () => {
@@ -52,6 +61,7 @@ export default function OrderPage() {
       const newOrder = await createNewOrder(orderData); // Call the createNewOrder function
       if (newOrder) {
         console.log('Order successfully created:', newOrder);
+        router.push('/Queue');
       } else {
         console.log('Failed to create order.');
       }
@@ -71,7 +81,7 @@ export default function OrderPage() {
 
       <div className="PrevOrders">
         {prevOrders.map((order) => (
-          <PrevOrder key={order.ao_id} amount={order.ao_amount} size={order.ao_size} />
+          <PrevOrder key={order.ao_id} amount={order.ao_amount} size={order.ao_size} onSelectOrder={handleOrderSelection}/>
         ))}
       </div>
 
@@ -116,7 +126,7 @@ export default function OrderPage() {
       </div>
 
       <button onClick={confirmButtonClick}>
-        Confirm
+        Confirm Order
       </button>
 
 
