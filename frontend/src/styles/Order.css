@@ -1,0 +1,13 @@
+
+
+
+.Order {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.PrevOrders {
+    display: flex;
+    flex-direction: row;
+}
