@@ -65,6 +65,44 @@ router.get('/:account_id', async function get_orders(req, res) {
 });
 
 
+
+
+
+
+
+// Get orders by machine_id with ao_status "In Progress" or "Pending"
+router.get('/machine/:machine_id', async (req, res) => {
+  const { machine_id } = req.params;
+
+  try {
+    const orders = await db.any(
+      `SELECT ao.*, a.account_first_name, a.account_last_name 
+       FROM account_order ao
+       JOIN account a ON ao.account_id = a.account_id
+       WHERE ao.machine_id = $1
+       AND (ao.ao_status = 'In Progress' OR ao.ao_status = 'Pending')
+       ORDER BY ao.ao_timestamp ASC`, 
+      [machine_id]
+    );
+
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error('Error fetching orders:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
   
   
 module.exports = router;
