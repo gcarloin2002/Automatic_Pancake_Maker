@@ -40,7 +40,7 @@ export default function LoginPage() {
       <h1>Login Page</h1>
 
       <div className="page">
-        <Link href="/Home">Go to Home Page</Link>
+        <Link href="/Machine">Go to Machine Page</Link>
         <Link href="/Registration">Go to Registration Page</Link>
         <Link href="/">Go to Welcome Page</Link>
       </div>
