@@ -20,6 +20,9 @@ export default function DiagnosticsPage() {
   useEffect(() => {
     if (status === 'loading') return;
 
+    // Log session to check its structure
+    console.log("Session Data:", session); 
+
     // Cast session.user to CustomUser to access 'username' and 'role'
     const user = session?.user as CustomUser | undefined;
 
