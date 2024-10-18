@@ -55,4 +55,3 @@ export default NextAuth({
   },
   secret: process.env.NEXTAUTH_SECRET || 'your-secret-key',  // Use a strong secret for signing the JWTs
 });
-

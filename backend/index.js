@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const account_routes = require('./routes/account_routes')
 const account_order_routes = require('./routes/account_order_routes')
+const machine_routes = require('./routes/machine_routes')
 
 const app = express();
 app.use(express.json());
@@ -23,3 +24,4 @@ module.exports = app;
 
 app.use('/api/account', account_routes);
 app.use('/api/account_order', account_order_routes);
+app.use('/api/machine', machine_routes);
