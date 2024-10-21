@@ -76,7 +76,7 @@ router.post('/login', async function login(req, res) {
 
     if (hashedPassword === account.account_password) {
       // Include role in the response
-      res.status(200).json({ message: 'Login successful', role: account.role });
+      res.status(200).json({ message: 'Login successful', role: account.role, username: account.account_username });
     } else {
       res.status(401).json({ message: 'Invalid login or password' });
     }
