@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import "../../styles/Order.css";
 
 import { fetchPrevOrders, createNewOrder } from '@/pages/api/order';
+import LogoutButton from '@/components/LogoutButton';
 
 
 // Define an interface for the order structure
@@ -76,6 +77,7 @@ export default function OrderPage() {
 
   return (
     <div className="Order">
+      <LogoutButton />
       <Link href="/Home"> {"<-Back"} </Link> 
       <h1>Order Again</h1>  
 
