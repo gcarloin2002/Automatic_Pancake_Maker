@@ -6,6 +6,9 @@ import "../../styles/Machine.css";
 import { useState, useEffect } from 'react';
 import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
+
+const secondsThreshold = 10
+
 interface Machine {
   machine_id: number;
   machine_network: string;
@@ -28,7 +31,6 @@ export default function MachinePage() {
 
   useEffect(() => {
     const fetchMachineData = async () => {
-      console.log(secondsApart)
       try {
         const fetchedMachine = await getMachineById(machine_id);
         
@@ -57,7 +59,7 @@ export default function MachinePage() {
 
   // Function to handle machine selection
   const handleMachineSelect = async () => {
-    if (secondsApart < 10 && machine && machine.machine_id !== undefined) {
+    if (secondsApart < secondsThreshold && machine && machine.machine_id !== undefined) {
       localStorage.setItem('machine_id', machine.machine_id.toString());
       router.push('/Home');
     }
@@ -68,19 +70,20 @@ export default function MachinePage() {
       <h1>Machine Page</h1>  
       <Link href="/">{"<-Back"}</Link>
 
-      {(secondsApart < 10) && machine && (
+      {(secondsApart < secondsThreshold) && machine && (
         <button className="machine_box" onClick={handleMachineSelect}>
           <h2>{machine.machine_name}</h2>
           <p>Network: {machine.machine_network}</p>
           <p>Location: {machine.machine_street}, {machine.machine_city}, {machine.machine_state} {machine.machine_zip_code}</p>
           <p>Temperature: {machine.machine_temperature} °C</p>
           <p>Battery: {machine.machine_batter ? 'Good' : 'Low'}</p>
-          <p>Status: {secondsApart < 10 ? "ON" : "OFF"}</p>
+          <p>Status: {secondsApart < secondsThreshold ? "ON" : "OFF"}</p>
         </button>
       )}
-      {(secondsApart >= 10) && (
+      {(secondsApart >= secondsThreshold) && (
         <p>No machines available</p>
       )}
+      {secondsApart}
     </div>
   );
 }
