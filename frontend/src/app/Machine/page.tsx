@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
 
-const secondsThreshold = 10
+const secondsThreshold = 5
+const delay = process.env.NEXT_PUBLIC_DELAY
 
 interface Machine {
   machine_id: number;
@@ -42,7 +43,7 @@ export default function MachinePage() {
           };
           
           setMachine(updatedMachine);
-          const seconds = Math.abs(calculateSecondsApart(formattedTimestamp) + 18000);
+          const seconds = Math.abs(calculateSecondsApart(formattedTimestamp) + Number(delay));
           setSecondsApart(seconds);
         }
       } catch (error) {
@@ -83,7 +84,6 @@ export default function MachinePage() {
       {(secondsApart >= secondsThreshold) && (
         <p>No machines available</p>
       )}
-      {secondsApart}
     </div>
   );
 }
