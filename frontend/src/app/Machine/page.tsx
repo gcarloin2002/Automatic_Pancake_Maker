@@ -6,6 +6,10 @@ import "../../styles/Machine.css";
 import { useState, useEffect } from 'react';
 import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
+
+const secondsThreshold = 5
+const delay = process.env.NEXT_PUBLIC_DELAY
+
 interface Machine {
   machine_id: number;
   machine_network: string;
@@ -39,8 +43,7 @@ export default function MachinePage() {
           };
           
           setMachine(updatedMachine);
-
-          const seconds = Math.abs(calculateSecondsApart(formattedTimestamp) + 18000);
+          const seconds = Math.abs(calculateSecondsApart(formattedTimestamp) + Number(delay));
           setSecondsApart(seconds);
         }
       } catch (error) {
@@ -57,7 +60,7 @@ export default function MachinePage() {
 
   // Function to handle machine selection
   const handleMachineSelect = async () => {
-    if (secondsApart < 5 && machine && machine.machine_id !== undefined) {
+    if (secondsApart < secondsThreshold && machine && machine.machine_id !== undefined) {
       localStorage.setItem('machine_id', machine.machine_id.toString());
       router.push('/Home');
     }
@@ -68,17 +71,17 @@ export default function MachinePage() {
       <h1>Machine Page</h1>  
       <Link href="/">{"<-Back"}</Link>
 
-      {(secondsApart < 5) && machine && (
+      {(secondsApart < secondsThreshold) && machine && (
         <button className="machine_box" onClick={handleMachineSelect}>
           <h2>{machine.machine_name}</h2>
           <p>Network: {machine.machine_network}</p>
           <p>Location: {machine.machine_street}, {machine.machine_city}, {machine.machine_state} {machine.machine_zip_code}</p>
           <p>Temperature: {machine.machine_temperature} °C</p>
           <p>Battery: {machine.machine_batter ? 'Good' : 'Low'}</p>
-          <p>Status: {secondsApart < 5 ? "ON" : "OFF"}</p>
+          <p>Status: {secondsApart < secondsThreshold ? "ON" : "OFF"}</p>
         </button>
       )}
-      {(secondsApart >= 5) && (
+      {(secondsApart >= secondsThreshold) && (
         <p>No machines available</p>
       )}
     </div>
