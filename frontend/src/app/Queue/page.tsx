@@ -6,6 +6,7 @@ import "../../styles/Queue.css";
 
 import CurrentOrder from '@/components/CurrentOrder'; // Assuming CurrentOrder takes size, amount, and name props
 import { fetchQueue } from '@/pages/api/queue'; // Ensure this imports your new fetchQueue function
+import LogoutButton from '@/components/LogoutButton';
 
 // Define the interface for CurrentOrder, same as the one used in fetchQueue
 interface CurrentOrder {
@@ -44,7 +45,8 @@ export default function QueuePage() {
 
   return (
     <div className="page">
-      <h1>Queue Page</h1>  
+      <h1>Queue Page</h1>
+      <LogoutButton />  
       <Link href="/Home">Go to Home Page</Link>
 
       {/* Render the loading state if loading */}
