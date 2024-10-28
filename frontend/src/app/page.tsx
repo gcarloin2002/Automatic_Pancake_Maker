@@ -1,13 +1,23 @@
 import Link from 'next/link';
-import "./styles.css";
+/*
+import Image from 'next/image';
+import logo from "../assets/logo.png"
+*/
+import "../styles/Welcome.css";
 
 
 export default function Home() {
   return (
-    <div className="page">
-      <h1>Automatic Pancake Maker Welcome Page</h1>
-      <Link href="/Login">Go to Login Page</Link>
-      <Link href="/Registration">Go to Registration Page</Link>
+    <div className="welcome">
+      <div className="top-bar">
+        <Link className="login-button" href="/Login">Login</Link>
+      </div>
+      <div className="title-card">
+        <h1 className="title">Automatic Pancake Maker Welcome Page</h1>
+      </div>
+      <div>
+        collage
+      </div>
     </div>
   );
 }
