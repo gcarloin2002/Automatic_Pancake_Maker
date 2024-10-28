@@ -1,0 +1,60 @@
+/*
+
+x = percentage
+clamp(percentage * 320, percentage vw, percentage * 2000)
+
+*/
+:root {
+    --main-blue: #4E95D9;
+    --light-gray: #323232;
+    --gray: #272727;
+
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
+
+
+.top-bar {
+    height: 40px;
+    background-color: var(--main-blue);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.return-button {
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin: 0px 0px 0px 10px;
+}
+
+
+.login-box-container {
+    background-color: var(--gray);
+    padding: 60px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login-box {
+    background-color: var(--light-gray);
+    padding: 30px 0px;
+    display: flex;
+    flex-direction: column;
+    border: 8px solid var(--main-blue);
+    border-radius: 3em;
+    margin: 20px;
+}

@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';  // Next.js Router for redirect
 import { signIn } from 'next-auth/react';
-import "./styles.css";
+import '../../styles/Login.css';
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,38 +37,41 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="page">
-      <h1>Login Page</h1>
-
-      <div className="page">
-        <Link href="/Machine">Go to Machine Page</Link>
-        <Link href="/Registration">Go to Registration Page</Link>
-        <Link href="/">Go to Welcome Page</Link>
+    <>
+      <div className="top-bar">
+        <Link className="return-button" href="/">{"< Return"}</Link>
       </div>
 
-      <form onSubmit={login_click}>
-        <label>Username or Email</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+      
 
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+      <div className="login-box-container">
+        <div className="login-box">
+          <form onSubmit={login_click}>
+            <label>Username or Email</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error message */}
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-        <input type="submit" value={loading ? "Logging in..." : "Login"} disabled={loading} /> {/* Show loading state */}
-      </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error message */}
 
-      {loading && <p>Loading...</p>}  {/* Show loading spinner */}
-    </div>
+            <input type="submit" value={loading ? "Logging in..." : "Login"} disabled={loading} /> {/* Show loading state */}
+          </form>
+
+          {loading && <p>Loading...</p>}  {/* Show loading spinner */}
+          <Link href="/Registration">Sign Up</Link>
+        </div>
+      </div>
+    </>
   );
 }
