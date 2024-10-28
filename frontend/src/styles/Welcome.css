@@ -1,0 +1,82 @@
+/*
+
+x = percentage
+clamp(percentage * 320, percentage vw, percentage * 2000)
+
+*/
+:root {
+    --main-blue: #4E95D9;
+    --light-gray: #323232;
+    --gray: #272727;
+
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
+
+
+.top-bar {
+    height: 40px;
+    background-color: var(--main-blue);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.login-button {
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin: 0px 10px 0px 0px;
+}
+
+
+.title-card {
+    background-color: var(--light-gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0px;
+}
+
+.logo-container {
+    width: clamp(150px, 15vw, 300px);
+}
+
+.title {
+    color: #ffffff;
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 90px);
+    padding: 40px 0px 0px 0px;
+    text-align: center;
+}
+
+.barrier {
+    height: 5px;
+    background-color: var(--main-blue);
+}
+
+.collage {
+    background-color: var(--gray);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.collage-image-container {
+    width: clamp(300px, 20vw, 800px);
+    margin: 40px;
+
+
+}
