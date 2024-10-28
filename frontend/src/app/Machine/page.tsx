@@ -28,6 +28,7 @@ export default function MachinePage() {
 
   useEffect(() => {
     const fetchMachineData = async () => {
+      console.log(secondsApart)
       try {
         const fetchedMachine = await getMachineById(machine_id);
         
@@ -39,7 +40,6 @@ export default function MachinePage() {
           };
           
           setMachine(updatedMachine);
-
           const seconds = Math.abs(calculateSecondsApart(formattedTimestamp) + 18000);
           setSecondsApart(seconds);
         }
