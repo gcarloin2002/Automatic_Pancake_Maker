@@ -29,7 +29,7 @@ export default function LoginPage() {
       setError('Login failed. Please check your credentials and try again.');
     } else {
       console.log('Login successful!');
-      router.push('/Diagnostics');  // Redirect to Diagnostics page after successful login
+      router.push('/Machine');  // Redirect to Diagnostics page after successful login
     }
 
     setPassword('');  // Clear password input

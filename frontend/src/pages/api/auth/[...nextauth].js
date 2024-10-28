@@ -12,21 +12,23 @@ export default NextAuth({
       async authorize(credentials) {
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const fetchUrl = baseUrl + '/api/account/login';
+
         const res = await fetch(fetchUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             login: credentials.username,
-            account_password: credentials.password
-          })
+            account_password: credentials.password,
+          }),
         });
 
         const user = await res.json();
 
         if (res.ok && user) {
+          // Return id, username, and role to store in the session
           return { id: user.id, username: user.username, role: user.role };
         } else {
-          return null;
+          return null;  // If login fails, return null
         }
       }
     })
@@ -41,14 +43,16 @@ export default NextAuth({
     // This callback is called when JWT tokens are created
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;  // Add user role to JWT token
+        token.username = user.username;  // Add username to the JWT token
+        token.role = user.role;
       }
       return token;
     },
     // This callback is called whenever a session is checked
     async session({ session, token }) {
       if (token) {
-        session.user.role = token.role;  // Add role to session object
+        session.user.username = token.username;  // Add username to session
+        session.user.role = token.role;
       }
       return session;
     },
