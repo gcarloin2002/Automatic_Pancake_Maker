@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Define the custom user type with 'username' and 'role'
 interface CustomUser {
@@ -11,11 +11,19 @@ interface CustomUser {
   role: string;
   email?: string | null;
   image?: string | null;
+  machine_id? : number | null;
 }
 
 export default function DiagnosticsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [machineId, setMachineId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Retrieve machine_id from local storage
+    const storedMachineId = localStorage.getItem('machine_id');
+    setMachineId(storedMachineId);
+  }, []);
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -40,6 +48,7 @@ export default function DiagnosticsPage() {
       <h1>Diagnostics</h1>
       {/* Access 'username' safely by casting session.user */}
       <p>Welcome, {session?.user ? (session.user as CustomUser).username : "User"}. This is the admin section.</p>
+      <p>Machine, {machineId}. This is the machine admin section.</p>
     </div>
   );
 }
