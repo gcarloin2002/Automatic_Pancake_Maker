@@ -20,7 +20,7 @@ html, body {
 }
 
 
-.top-bar {
+.welcome-top-bar {
     height: 40px;
     background-color: var(--main-blue);
     display: flex;
@@ -28,7 +28,7 @@ html, body {
     align-items: center;
 }
 
-.login-button {
+.welcome-login-button {
     color: #ffffff;
     font-size: 20px;
     text-decoration: none;
