@@ -1,11 +1,12 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';  // Next.js Router for redirect
 import { signIn } from 'next-auth/react';
+import logo from '../../assets/logo.png';
 import '../../styles/Login.css';
-
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);  // Loading state
 
-  const login_click = async (e: React.FormEvent<HTMLFormElement>) => {
+  const login_click = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);  // Start loading
 
@@ -36,40 +37,62 @@ export default function LoginPage() {
     setPassword('');  // Clear password input
   };
 
+  const registration_click = () => {
+    router.push('/Registration');  // Redirect to Registration page
+  };
+
   return (
     <>
       <div className="top-bar">
         <Link className="return-button" href="/">{"< Return"}</Link>
       </div>
-
-      
-
       <div className="login-box-container">
         <div className="login-box">
-          <form onSubmit={login_click}>
-            <label>Username or Email</label>
-            <input
+          <div className="login-logo-container">
+            <Image src={logo} alt="Logo" layout="responsive" objectFit="contain" />
+          </div>
+
+          <h1 className="login-title">Login</h1>
+          
+          {error && <p className="error-msg">{error}</p>}  {/* Display error message */}
+          <form className="login-contents" onSubmit={(e) => e.preventDefault()}>
+            <label className="login-label">Username/Email</label>
+            <input className="login-input"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
 
-            <label>Password</label>
-            <input
+            <label className="login-label">Password</label>
+            <input className="login-input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error message */}
 
-            <input type="submit" value={loading ? "Logging in..." : "Login"} disabled={loading} /> {/* Show loading state */}
+
+
           </form>
 
-          {loading && <p>Loading...</p>}  {/* Show loading spinner */}
-          <Link href="/Registration">Sign Up</Link>
+         
+          <div className="login-button-container">
+            <button className="login-button" 
+              onClick={registration_click}>
+              Sign Up
+            </button>
+
+            <button 
+              className="login-button" 
+              onClick={login_click} 
+              disabled={loading} // Disable button while loading
+            >
+              {loading ? "Logging in..." : "Login"}  {/* Show loading state */}
+            </button>
+          </div>
+         
         </div>
       </div>
     </>

@@ -29,8 +29,8 @@ const collage_images = [
 export default function Home() {
   return (
     <>
-      <div className="top-bar">
-        <Link className="login-button" href="/Login">Login</Link>
+      <div className="welcome-top-bar">
+        <Link className="welcome-login-button" href="/Login">Login</Link>
       </div>
       <div className="title-card">
         <div className="logo-container">
