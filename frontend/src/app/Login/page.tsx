@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="top-bar">
+      <div className="login-top-bar">
         <Link className="return-button" href="/">{"< Return"}</Link>
       </div>
       <div className="login-box-container">

@@ -1,9 +1,12 @@
 "use client";
 
+
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import "./styles.css";
+import '../../styles/Registration.css';
+import logo from '../../assets/logo.png';
 import { hashPassword } from '../global_helpers';
 
 
@@ -26,7 +29,7 @@ export default function RegistrationPage() {
       setError('Passwords do not match');
       return;
     }
-    const hashedPassword = hashPassword(password, username);
+    const hashedPassword = hashPassword(password, username); 
 
     // Send registration data to the API
     const res = await fetch('/api/register', {
@@ -50,68 +53,77 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="page">
-      <h1>Registration Page</h1>
-
-      <div className="page">
-        <Link href="/Home">Go to Home Page</Link>
-        <Link href="/Login">Go to Login Page</Link>
-        <Link href="/">Go to Welcome Page</Link>
+    <>
+      <div className="registration-top-bar">
+        <Link className="return-button" href="/Login">{"< Return"}</Link>
       </div>
+      <div className="registration-box-container">
+        <div className="registration-box">
 
-      <form onSubmit={handleSubmit}>
-        <label>First Name</label>
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
+          <div className="registration-logo-container">
+            <Image src={logo} alt="Logo" layout="responsive" objectFit="contain" />
+          </div>
 
-        <label>Last Name</label>
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
+          <h1 className="registration-title">Registration</h1>
 
-        <label>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
 
-        <label>Username</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+          {error && <p className="error-msg">{error}</p>}
+          <form className="registration-contents" onSubmit={handleSubmit}>
+            <label className="registration-label">First Name</label>
+            <input className="registration-input"
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
 
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+            <label className="registration-label">Last Name</label>
+            <input className="registration-input"
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
 
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          value={password2}
-          onChange={(e) => setPassword2(e.target.value)}
-          required
-        />
+            <label className="registration-label">Email</label>
+            <input className="registration-input"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        
-        <input type="submit" value="Register" />
-      </form>
-    </div>
+            <label className="registration-label">Username</label>
+            <input className="registration-input"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+
+            <label className="registration-label">Password</label>
+            <input className="registration-input"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <label className="registration-label">Confirm Password</label>
+            <input className="registration-input"
+              type="password"
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
+              required
+            />
+
+            
+            <div className="registration-button-container">
+              <input className="registration-button" type="submit" value="Register" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 }
