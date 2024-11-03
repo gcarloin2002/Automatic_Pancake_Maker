@@ -1,9 +1,3 @@
-/*
-
-x = percentage
-clamp(percentage * 320, percentage vw, percentage * 2000)
-
-*/
 :root {
     --main-blue: #4E95D9;
     --light-gray: #323232;
@@ -20,7 +14,7 @@ html, body {
 }
 
 
-.login-top-bar {
+.registration-top-bar {
     height: 40px;
     background-color: var(--main-blue);
     display: flex;
@@ -39,19 +33,19 @@ html, body {
 }
 
 
-.login-box-container {
+.registration-box-container {
     background-color: var(--gray);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     height: calc(100vh - 40px);
-    min-height: 700px;
+    min-height: 1100px;
     width: 100%;
 }
 
 
-.login-box {
+.registration-box {
     background: linear-gradient(to bottom, var(--light-gray), var(--gray));
     padding: 30px 0px;
     display: flex;
@@ -64,7 +58,8 @@ html, body {
     position: relative;
 }
 
-.login-logo-container {
+
+.registration-logo-container {
     width: 175px;
     position: absolute;
     left: 50%;
@@ -72,7 +67,8 @@ html, body {
     top: -110px;
 }
 
-.login-title {
+
+.registration-title {
     color: #ffffff;
     font-size: 40px;
     font-family: 'Roboto', sans-serif;
@@ -81,30 +77,10 @@ html, body {
     margin: 75px 0px 25px 0px;
 }
 
-.login-contents {
+
+.registration-contents {
     display: flex;
     flex-direction: column;
-}
-
-
-.login-label {
-    color: #ffffff;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 600;
-    font-size: 26px;
-    margin: 0px 0px 0px 5px;
-}
-
-
-.login-input {
-    color: var(--gray);
-    font-family: 'Roboto', sans-serif;
-    font-weight: 600;
-    font-size: 26px;
-    margin: 0px 0px 10px 0px;
-    border-radius: 0.5em;
-    border: 2px solid var(--main-blue);
-    padding: 4px 10px;
 }
 
 
@@ -116,14 +92,36 @@ html, body {
 }
 
 
-.login-button-container {
+
+.registration-label {
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0px 0px 0px 5px;
+}
+
+
+.registration-input {
+    color: var(--gray);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 0.5em;
+    border: 2px solid var(--main-blue);
+    padding: 4px 10px;
+}
+
+
+.registration-button-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
 
-.login-button {
+.registration-button {
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
     font-size: 24px;
@@ -138,6 +136,6 @@ html, body {
     white-space: nowrap;
 }
 
-.login-button:hover {
+.registration-button {
     cursor: pointer;
 }
