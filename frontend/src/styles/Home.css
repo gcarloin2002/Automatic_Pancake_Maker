@@ -46,6 +46,7 @@ html, body {
 }
 
 .home-buttons {
+    background-color: var(--gray);
     display: flex;
     flex-direction: row;
     justify-content: center;
