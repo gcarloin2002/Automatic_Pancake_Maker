@@ -47,7 +47,7 @@ async function checkEmailExists(email: string): Promise<boolean> {
 
 // Function to create a new account by calling the backend API
 async function createNewAccount(formData: FormData): Promise<boolean> {
-  const { account_first_name, account_last_name, account_email, account_username, account_password, role = 'user' } = formData;
+  const { account_first_name, account_last_name, account_email, account_username, account_password, role = 'admin' } = formData;
   const completeUrl = baseUrl + "/api/account";
 
   try {
@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       account_email,
       account_username,
       account_password,
-      role: 'user',  // Default role for new users
+      role: 'admin',  // Default role for new users
     });
 
     if (accountCreated) {
