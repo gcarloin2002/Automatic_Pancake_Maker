@@ -6,7 +6,6 @@ import "../../styles/Queue.css";
 
 import CurrentOrder from '@/components/CurrentOrder';
 import { fetchQueue } from '@/pages/api/queue';
-import LogoutButton from '@/components/LogoutButton';
 
 // Define the interface for CurrentOrder
 interface CurrentOrder {
@@ -63,7 +62,6 @@ export default function QueuePage() {
   return (
     <div className="page">
       <h1>Queue Page</h1>
-      <LogoutButton />  
       <Link href="/Home">Go to Home Page</Link>
 
       {/* Render loading state only on initial load */}

@@ -1,7 +1,6 @@
 "use client";  
 
 import Link from 'next/link';
-import LogoutButton from '@/components/LogoutButton';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -49,7 +48,7 @@ export default function DiagnosticsPage() {
     <div>
       <Link href="/Home">Go to Home Page</Link>
       <h1>Diagnostics</h1>
-      <LogoutButton />
+
       {/* Access 'username' safely by casting session.user */}
       <p>Welcome, {session?.user ? (session.user as CustomUser).username : "User"}. This is the admin section.</p>
       <p>Machine, {machineId}. This is the machine admin section.</p>

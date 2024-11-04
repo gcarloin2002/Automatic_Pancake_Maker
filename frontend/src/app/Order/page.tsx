@@ -8,7 +8,6 @@ import "../../styles/Order.css";
 
 import { fetchPrevOrders, createNewOrder } from '@/pages/api/order';
 import { fetchQueue } from '@/pages/api/queue';
-import LogoutButton from '@/components/LogoutButton';
 
 interface PrevOrderData {
   ao_id: number;    
@@ -80,7 +79,6 @@ export default function OrderPage() {
 
   return (
     <div className="Order">
-      <LogoutButton />
       <Link href="/Home"> {"<-Back"} </Link>
       <h1>Order Again</h1>  
 
