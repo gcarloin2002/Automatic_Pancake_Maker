@@ -31,6 +31,7 @@ export default function HomePage() {
       </div>
 
       <div className="home-buttons-container">
+
         <div className="home-buttons">
           <button className="home-button home-button-1" onClick={order_click}>
             <h1 className="home-button-label">
@@ -47,7 +48,10 @@ export default function HomePage() {
               Diagnostics
             </h1>
           </button>
+
         </div>
+
+
 
       </div>
 

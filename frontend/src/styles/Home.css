@@ -39,15 +39,14 @@ html, body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    
     height: calc(100vh - 60px);
     min-height: 600px;
     width: 100%;
     flex-wrap: wrap;
 }
 
-
 .home-buttons {
-    background-color: var(--gray);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -57,10 +56,14 @@ html, body {
 }
 
 
+
+
 .home-button {
     margin: 20px;
     border: none;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     border-radius: 3em;
 }
