@@ -84,7 +84,6 @@ export default function MachinePage() {
       {(secondsApart >= secondsThreshold) && (
         <p>No machines available</p>
       )}
-      {secondsApart}
     </div>
   );
 }

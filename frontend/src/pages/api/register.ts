@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       account_email,
       account_username,
       account_password,
-      role: 'user',  // Default role for new users
+      role: 'admin',  // Default role for new users
     });
 
     if (accountCreated) {

@@ -10,7 +10,7 @@ function isEmail(input) {
 
 // Creates a new account
 router.post('/', async function create_account(req, res) {
-  const { account_username, account_password, account_first_name, account_last_name, account_email, role = 'user' } = req.body;
+  const { account_username, account_password, account_first_name, account_last_name, account_email, role = 'admin' } = req.body;
 
   // Check if any required fields are missing
   if (!account_username || !account_password || !account_first_name || !account_last_name || !account_email) {
