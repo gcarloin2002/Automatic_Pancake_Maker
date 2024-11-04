@@ -1,5 +1,6 @@
 "use client";  
 
+import Link from 'next/link';
 import LogoutButton from '@/components/LogoutButton';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -46,6 +47,7 @@ export default function DiagnosticsPage() {
 
   return (
     <div>
+      <Link href="/Home">Go to Home Page</Link>
       <h1>Diagnostics</h1>
       <LogoutButton />
       {/* Access 'username' safely by casting session.user */}
