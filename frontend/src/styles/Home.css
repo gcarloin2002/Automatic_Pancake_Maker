@@ -121,3 +121,8 @@ html, body {
     background-color: #61B1FE;
 }
 
+
+
+.invis {
+    visibility: hidden;
+}
