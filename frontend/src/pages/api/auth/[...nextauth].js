@@ -45,6 +45,7 @@ export default NextAuth({
       if (user) {
         token.username = user.username;  // Add username to the JWT token
         token.role = user.role;
+        token.id = user.id;
       }
       return token;
     },
@@ -53,6 +54,7 @@ export default NextAuth({
       if (token) {
         session.user.username = token.username;  // Add username to session
         session.user.role = token.role;
+        session.user.id = token.id
       }
       return session;
     },

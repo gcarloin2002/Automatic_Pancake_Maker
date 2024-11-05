@@ -51,6 +51,7 @@ export default function DiagnosticsPage() {
 
       {/* Access 'username' safely by casting session.user */}
       <p>Welcome, {session?.user ? (session.user as CustomUser).username : "User"}. This is the admin section.</p>
+      <p>Welcome, {session?.user ? (session.user as CustomUser).id : "User"}. This is the admin section.</p>
       <p>Machine, {machineId}. This is the machine admin section.</p>
     </div>
   );
