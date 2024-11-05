@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from 'next-auth/react';
 import PrevOrder from '@/components/PrevOrder';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -8,6 +9,16 @@ import "../../styles/Order.css";
 
 import { fetchPrevOrders, createNewOrder } from '@/pages/api/order';
 import { fetchQueue } from '@/pages/api/queue';
+
+
+interface CustomUser {
+  id: string;
+  username: string;
+  role: string;
+  email?: string | null;
+  image?: string | null;
+  machine_id? : number | null;
+}
 
 interface PrevOrderData {
   ao_id: number;    
@@ -18,6 +29,8 @@ interface PrevOrderData {
 }
 
 export default function OrderPage() {
+
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]);
@@ -28,6 +41,20 @@ export default function OrderPage() {
 
   const account_id = 13;
   const machine_id = 1;
+
+  useEffect(() => {
+    if (status === 'loading') return;
+
+    // Log session to check its structure
+    console.log("Session Data:", session); 
+
+    // Cast session.user to CustomUser to access 'username' and 'role'
+    const user = session?.user as CustomUser | undefined;
+
+    if (!user || user.role !== 'admin') {
+      router.push('/');  // Redirect if the user is not an admin
+    }
+  }, [session, status, router]);
 
   // Fetch previous orders when the component mounts
   useEffect(() => {
