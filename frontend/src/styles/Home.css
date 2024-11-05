@@ -29,9 +29,25 @@ html, body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 
+.home-logo-container {
+    width: 70px;
+    position: absolute;
+    right: 10px;
+}
+
+
+.home-message {
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    margin: 0px;
+
+}
 
 .home-buttons-container {
     background-color: var(--gray);
