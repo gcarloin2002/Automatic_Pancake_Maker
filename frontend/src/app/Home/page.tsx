@@ -11,8 +11,11 @@ import queue_icon from '../../assets/queue-icon.png';
 import diagnostics_icon from '../../assets/diagnostics-icon.png';
 import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
-const secondsThreshold = 5;
+
+const refreshRate = 5000
+const secondsThreshold = 10;
 const delay = process.env.NEXT_PUBLIC_DELAY;
+
 
 interface Machine {
   machine_id: number;
@@ -63,7 +66,7 @@ export default function HomePage() {
   // Set interval to fetch machine data every second
   useEffect(() => {
     fetchMachineData();
-    const intervalId = setInterval(fetchMachineData, 1000);
+    const intervalId = setInterval(fetchMachineData, refreshRate);
     return () => clearInterval(intervalId);
   }, [machine_id]);
 

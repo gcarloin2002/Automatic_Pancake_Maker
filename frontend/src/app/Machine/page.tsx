@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
 
-const secondsThreshold = 5
+const refreshRate = 5000
+const secondsThreshold = 10
 const delay = process.env.NEXT_PUBLIC_DELAY
 
 interface Machine {
@@ -54,7 +55,7 @@ export default function MachinePage() {
 
     fetchMachineData();
 
-    const intervalId = setInterval(fetchMachineData, 1000);
+    const intervalId = setInterval(fetchMachineData, refreshRate);
 
     return () => clearInterval(intervalId);
   }, [machine_id]);
