@@ -39,7 +39,7 @@ export default function OrderPage() {
   const [queueLimitExceeded, setQueueLimitExceeded] = useState(false);
   const [showQueueFullMessage, setShowQueueFullMessage] = useState(false); // Tracks if the message should show
 
-  const account_id = 13;
+  const account_id = Number(session?.user ? (session.user as CustomUser).id : "User");
   const machine_id = 1;
 
   useEffect(() => {
