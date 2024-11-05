@@ -50,5 +50,7 @@ if __name__ == "__main__":
         "machine_batter": True
     }
 
+    interval_seconds = 5
+
     # Call the function to repeatedly update the machine with ID 1 every 2 seconds
-    update_machine_data_repeatedly(backend_url, 1, data, 1)
+    update_machine_data_repeatedly(backend_url, 1, data, interval_seconds)
