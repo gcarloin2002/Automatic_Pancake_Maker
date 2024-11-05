@@ -1,8 +1,10 @@
 "use client";
 
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
+import logo from '../../assets/logo.png';
 import LogoutButton from '@/components/LogoutButton';
 import { useRouter } from 'next/navigation';
 import '../../styles/Home.css';
@@ -16,6 +18,15 @@ const refreshRate = 5000
 const secondsThreshold = 10;
 const delay = process.env.NEXT_PUBLIC_DELAY;
 
+
+interface CustomUser {
+  id: string;
+  username: string;
+  role: string;
+  email?: string | null;
+  image?: string | null;
+  machine_id? : number | null;
+}
 
 interface Machine {
   machine_id: number;
@@ -31,10 +42,26 @@ interface Machine {
 }
 
 export default function HomePage() {
+  const { data: session, status } = useSession();
   const [machine, setMachine] = useState<Machine | null>(null);
   const [secondsApart, setSecondsApart] = useState<number>(0);
   const router = useRouter();
   const machine_id = 1; // Replace with the actual machine ID you want to fetch
+
+  useEffect(() => {
+    if (status === 'loading') return;
+
+    // Log session to check its structure
+    console.log("Session Data:", session); 
+
+    // Cast session.user to CustomUser to access 'username' and 'role'
+    const user = session?.user as CustomUser | undefined;
+
+    if (!user || user.role !== 'admin') {
+      router.push('/');  // Redirect if the user is not an admin
+    }
+  }, [session, status, router]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('machine_id');  // Clear machine_id from local storage
@@ -94,9 +121,12 @@ export default function HomePage() {
     <>
       <div className="home-top-bar-gap"></div>
       <div className="home-top-bar">
-        <LogoutButton />
-        <h1>Welcome User!</h1>
-        <div>{machine && secondsApart}</div>
+        <LogoutButton/>
+        <h1 className="home-message">Welcome {session?.user ? (session.user as CustomUser).username : "User"}</h1>
+        <div className="invis">{machine?.machine_id}</div>
+        <div className="home-logo-container">
+          <Image src={logo} alt="Logo" layout="responsive" objectFit="contain" />
+        </div>
       </div>
 
       <div className="home-buttons-container">
