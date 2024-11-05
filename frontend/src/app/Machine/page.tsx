@@ -29,6 +29,7 @@ export default function MachinePage() {
   const router = useRouter();
 
   const machine_id = 1; // Replace with the actual machine ID you want to fetch
+  
 
   useEffect(() => {
     const fetchMachineData = async () => {
