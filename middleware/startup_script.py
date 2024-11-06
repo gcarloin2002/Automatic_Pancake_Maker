@@ -46,8 +46,8 @@ if __name__ == "__main__":
         "machine_city": "College Station",
         "machine_state": "TX",
         "machine_zip_code": "77840",
-        "machine_temperature": 0,
-        "machine_batter": True
+        "machine_temperature": 1.23,
+        "machine_batter": 5.67
     }
 
     interval_seconds = 5
