@@ -21,7 +21,7 @@ interface Machine {
   machine_zip_code: string;
   machine_timestamp: string;
   machine_temperature: number;
-  machine_batter: boolean;
+  machine_batter: number;
 }
 
 export default function MachinePage() {
