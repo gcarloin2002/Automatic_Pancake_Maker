@@ -123,7 +123,7 @@ export default function HomePage() {
       <div className="home-top-bar">
         <LogoutButton/>
         <h1 className="home-message">Welcome {session?.user ? (session.user as CustomUser).username : "User"}</h1>
-        <div className="invis">{machine?.machine_id}</div>
+        <p className="invis">{machine?.machine_id}</p>
         <div className="home-logo-container">
           <Image src={logo} alt="Logo" layout="responsive" objectFit="contain" />
         </div>
