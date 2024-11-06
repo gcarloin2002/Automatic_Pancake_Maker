@@ -44,7 +44,7 @@ html, body {
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    font-size: 30px;
+    font-size: 20px;
     margin: 0px;
 
 }
@@ -124,5 +124,6 @@ html, body {
 
 
 .invis {
-    visibility: hidden;
+    width: 20px;
 }
+
