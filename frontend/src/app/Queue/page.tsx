@@ -60,28 +60,34 @@ export default function QueuePage() {
   }, []);
 
   return (
-    <div className="page">
-      <h1>Queue Page</h1>
-      <Link href="/Home">Go to Home Page</Link>
+    <>
+      <div className="queue-top-bar">
+        <Link className="return-button" href="/Home">{"< Return"}</Link>
+      </div>
 
-      {/* Render loading state only on initial load */}
-      {loading ? (
-        <p>Loading queue...</p>
-      ) : (
-        currentQueue && currentQueue.length > 0 ? (
-          currentQueue.map((order) => (
-            <CurrentOrder 
-              key={order.ao_id} 
-              size={parseInt(order.ao_size)} 
-              amount={order.ao_amount} 
-              name={`${order.account_first_name} ${order.account_last_name}`} 
-              status={order.ao_status}
-            />
-          ))
-        ) : (
-          <p>No orders found</p>
-        )
-      )}
-    </div>
+      <div className="queue-container">
+        <h1 className="queue-title">Queue</h1>
+        <div className="current-orders">
+          {loading ? (
+            <p className="loading-orders">Loading queue...</p>
+          ) : (
+            currentQueue && currentQueue.length > 0 ? (
+              currentQueue.map((order) => (
+                <CurrentOrder 
+                  key={order.ao_id} 
+                  size={parseInt(order.ao_size)} 
+                  amount={order.ao_amount} 
+                  name={`${order.account_first_name} ${order.account_last_name}`} 
+                  status={order.ao_status}
+                />
+              ))
+            ) : (
+              <p className="no-orders">No orders found</p>
+            )
+          )}
+        </div>
+        
+      </div>
+    </>
   );
 }
