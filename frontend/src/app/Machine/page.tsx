@@ -69,24 +69,27 @@ export default function MachinePage() {
   };
 
   return (
-    <div className="Machine">
-      <h1>Machine Page</h1>  
-      <Link href="/">{"<-Back"}</Link>
-
-      {(secondsApart < secondsThreshold) && machine && (
-        <button className="machine_box" onClick={handleMachineSelect}>
-          <h2>{machine.machine_name}</h2>
-          <p>Network: {machine.machine_network}</p>
-          <p>Location: {machine.machine_street}, {machine.machine_city}, {machine.machine_state} {machine.machine_zip_code}</p>
-          <p>Temperature: {machine.machine_temperature} °C</p>
-          <p>Battery: {machine.machine_batter ? 'Good' : 'Low'}</p>
-          <p>Status: {secondsApart < secondsThreshold ? "ON" : "OFF"}</p>
-        </button>
-      )}
-      {(secondsApart >= secondsThreshold) && (
-        <p>No machines available</p>
-      )}
-      {secondsApart}
-    </div>
+    <>
+      <div className="machine-top-bar">
+        <Link className="return-button" href="/">{"< Return"}</Link>
+      </div>
+      <div className="machine-container">
+        <h1 className="machine-title">Machines</h1>  
+        {(secondsApart < secondsThreshold) && machine && (
+          <button className="machine_box" onClick={handleMachineSelect}>
+            <h1 className="machine-name">{machine.machine_name}</h1>
+            <p className="machine-status">Network: {machine.machine_network}</p>
+            <p className="machine-status">Location: {machine.machine_street}, {machine.machine_city}, {machine.machine_state} {machine.machine_zip_code}</p>
+            <p className="machine-status">Temperature: {machine.machine_temperature} °C</p>
+            <p className="machine-status">Batter: {machine.machine_batter}</p>
+            <p className="machine-status">Status: {secondsApart < secondsThreshold ? "ON" : "OFF"}</p>
+          </button>
+        )}
+        {(secondsApart >= secondsThreshold) && (
+          <p className="no-machines">(No machines available)</p>
+        )}
+      </div>
+      
+    </>
   );
 }

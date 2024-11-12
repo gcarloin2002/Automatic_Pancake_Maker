@@ -1,14 +1,88 @@
+:root {
+    --main-blue: #4E95D9;
+    --light-gray: #323232;
+    --gray: #272727;
 
-.Machine {
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
+
+
+.machine-top-bar {
+    height: 40px;
+    background-color: var(--main-blue);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
 }
 
 .machine_box {
-    border: 1px solid black;
+    background-color: var(--main-blue);
+    border: none;
     padding: 10px;
     margin: 10px 10px;
-    border-radius: 5px;
+    border-radius: 3em;
     width: 300px;
     height: 300px;
+}
+
+.machine_box {
+    cursor: pointer;
+}
+
+.return-button {
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin: 0px 0px 0px 10px;
+}
+
+
+.machine-container {
+    background-color: var(--gray);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 40px);
+    min-height: 700px;
+    width: 100%;
+}
+
+
+.machine-title {
+    color: #ffffff;
+    font-size: 36px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin: 20px 0px 0px 20px;
+}
+
+
+.no-machines  {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin: 20px 0px 0px 20px;
+}
+
+.machine-name {
+    color: #ffffff;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.machine-status {
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
