@@ -1,9 +1,54 @@
+:root {
+    --main-blue: #4E95D9;
+    --light-gray: #323232;
+    --gray: #272727;
 
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
 
 
 .CurrentOrder {
-    border: 1px solid black;
-    padding: 10px;
+    border: 2px solid var(--main-blue);
+    border-radius: 3em;
+    padding: 10px 40px;
     margin: 10px 10px;
-    border-radius: 5px;
+}
+
+
+.current-order-status {
+    color: #ffffff;
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+
+.current-order-size {
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+
+.current-order-name {
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+
+.current-order-amount {
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
 }
