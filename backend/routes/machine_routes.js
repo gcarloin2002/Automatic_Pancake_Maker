@@ -45,7 +45,8 @@ router.put('/:machine_id', async (req, res) => {
     machine_state,
     machine_zip_code,
     machine_temperature,
-    machine_batter
+    machine_batter,
+    machine_mode, // Include machine_mode from the request body
   } = req.body;
   
   const { machine_id } = req.params;
@@ -63,8 +64,9 @@ router.put('/:machine_id', async (req, res) => {
         machine_zip_code = $6,
         machine_temperature = $7,
         machine_batter = $8,
+        machine_mode = $9,
         machine_timestamp = NOW()
-      WHERE machine_id = $9`,
+      WHERE machine_id = $10`,
       [
         machine_network,
         machine_name,
@@ -74,7 +76,8 @@ router.put('/:machine_id', async (req, res) => {
         machine_zip_code,
         machine_temperature,
         machine_batter,
-        machine_id  // 'machine_id' from the route params
+        machine_mode,
+        machine_id
       ]
     );
     res.status(200).send('Machine data updated successfully');
@@ -85,3 +88,4 @@ router.put('/:machine_id', async (req, res) => {
 });
 
 module.exports = router;
+
