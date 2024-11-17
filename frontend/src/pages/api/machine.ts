@@ -10,7 +10,7 @@ interface Machine {
     machine_zip_code: string;
     machine_timestamp: string;
     machine_temperature: number;
-    machine_batter: boolean;
+    machine_batter: number;
   }
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;

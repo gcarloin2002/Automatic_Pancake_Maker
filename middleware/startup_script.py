@@ -46,9 +46,11 @@ if __name__ == "__main__":
         "machine_city": "College Station",
         "machine_state": "TX",
         "machine_zip_code": "77840",
-        "machine_temperature": 0,
-        "machine_batter": True
+        "machine_temperature": 1.23,
+        "machine_batter": 5.67
     }
 
+    interval_seconds = 5
+
     # Call the function to repeatedly update the machine with ID 1 every 2 seconds
-    update_machine_data_repeatedly(backend_url, 1, data, 1)
+    update_machine_data_repeatedly(backend_url, 1, data, interval_seconds)

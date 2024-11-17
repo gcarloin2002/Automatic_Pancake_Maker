@@ -1,0 +1,129 @@
+
+:root {
+    --main-blue: #4E95D9;
+    --light-gray: #323232;
+    --gray: #272727;
+
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
+
+.home-top-bar-gap {
+    height: 20px;
+    background-color: var(--gray);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.home-top-bar {
+    height: 40px;
+    background-color: var(--main-blue);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+
+.home-logo-container {
+    width: 70px;
+    position: absolute;
+    right: 10px;
+}
+
+
+.home-message {
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0px;
+
+}
+
+.home-buttons-container {
+    background-color: var(--gray);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;   
+    height: calc(100vh - 60px);
+    min-height: 600px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.home-buttons {
+    background-color: var(--gray);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+
+
+
+.home-button {
+    margin: 20px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 3em;
+    position: relative;
+}
+
+.home-img-container {
+    width: 180px;
+    margin: 0px 0px 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-button-label {
+    color: #ffffff;
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    margin: 0px;
+    bottom: 10px;
+}
+
+.home-button {
+    cursor: pointer;
+    width: 280px;
+    height: 280px;
+}
+
+.home-button-1 {
+    background-color: #2C7DCE;
+}
+
+.home-button-2 {
+    background-color: #4E95D9;
+}
+
+.home-button-3 {
+    background-color: #61B1FE;
+}
+
+
+
+.invis {
+    width: 20px;
+}
+

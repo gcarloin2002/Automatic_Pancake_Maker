@@ -12,10 +12,11 @@ interface CurrentOrderProps {
 const CurrentOrder: React.FC<CurrentOrderProps> = ({ amount, size, name, status }) => {
   return (
     <div className="CurrentOrder">
-        <p>{size}-Inch Pancakes</p>
-        <p>{amount} Count</p>
-        <p>Name: {name}</p> 
-        <p>Status: {status}</p> 
+        <p className="current-order-status">Status: {status}</p> 
+        <p className="current-order-name">Name: {name}</p> 
+        <p className="current-order-size">{size}-Inch Pancakes</p>
+        <p className="current-order-amount">{amount} Count</p>
+        
     </div>
   );
 };

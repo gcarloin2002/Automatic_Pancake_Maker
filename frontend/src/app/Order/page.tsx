@@ -1,5 +1,7 @@
 "use client";
 
+import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import PrevOrder from '@/components/PrevOrder';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -8,6 +10,22 @@ import "../../styles/Order.css";
 
 import { fetchPrevOrders, createNewOrder } from '@/pages/api/order';
 import { fetchQueue } from '@/pages/api/queue';
+import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
+
+
+const refreshRate = 5000
+const secondsThreshold = 10;
+const delay = process.env.NEXT_PUBLIC_DELAY;
+
+
+interface CustomUser {
+  id: string;
+  username: string;
+  role: string;
+  email?: string | null;
+  image?: string | null;
+  machine_id? : number | null;
+}
 
 interface PrevOrderData {
   ao_id: number;    
@@ -17,17 +35,89 @@ interface PrevOrderData {
   ao_status: string; 
 }
 
+interface Machine {
+  machine_id: number;
+  machine_network: string;
+  machine_name: string;
+  machine_street: string;
+  machine_city: string;
+  machine_state: string;
+  machine_zip_code: string;
+  machine_timestamp: string;
+  machine_temperature: number;
+  machine_batter: number;
+}
+
 export default function OrderPage() {
+
+  const { data: session, status } = useSession();
+  const [machine, setMachine] = useState<Machine | null>(null);
+  const [secondsApart, setSecondsApart] = useState<number>(0);
   const router = useRouter();
+  const machine_id = 1; // Replace with the actual machine ID you want to fetch
 
   const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]);
   const [size, setSize] = useState(5);
   const [amount, setAmount] = useState(1);
   const [queueLimitExceeded, setQueueLimitExceeded] = useState(false);
   const [showQueueFullMessage, setShowQueueFullMessage] = useState(false); // Tracks if the message should show
+  const account_id = Number(session?.user ? (session.user as CustomUser).id : "User");
 
-  const account_id = 13;
-  const machine_id = 1;
+
+  useEffect(() => {
+    if (status === 'loading') return;
+
+    // Log session to check its structure
+    console.log("Session Data:", session); 
+
+    // Cast session.user to CustomUser to access 'username' and 'role'
+    const user = session?.user as CustomUser | undefined;
+
+    if (!user || user.role !== 'admin') {
+      router.push('/');  // Redirect if the user is not an admin
+    }
+  }, [session, status, router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('machine_id');  // Clear machine_id from local storage
+    signOut({
+      callbackUrl: '/',  // Redirect to homepage after logout
+    });
+  };
+
+  // Fetch machine data and calculate seconds apart
+  const fetchMachineData = async () => {
+    try {
+      const fetchedMachine = await getMachineById(machine_id);
+      if (fetchedMachine) {
+        const formattedTimestamp = convertToDatabaseFormat(fetchedMachine.machine_timestamp);
+        const updatedMachine: Machine = {
+          ...fetchedMachine,
+          machine_timestamp: formattedTimestamp,
+        };
+        
+        setMachine(updatedMachine);
+        const seconds = Math.abs(calculateSecondsApart(formattedTimestamp) + Number(delay));
+        setSecondsApart(seconds);
+      }
+    } catch (error) {
+      console.error('Error fetching machine data:', error);
+    }
+  };
+
+  // Set interval to fetch machine data every second
+  useEffect(() => {
+    fetchMachineData();
+    const intervalId = setInterval(fetchMachineData, refreshRate);
+    return () => clearInterval(intervalId);
+  }, [machine_id]);
+
+  // Trigger logout if secondsApart exceeds threshold
+  useEffect(() => {
+    if (secondsApart > secondsThreshold) {
+      handleLogout();
+    }
+  }, [secondsApart]);
 
   // Fetch previous orders when the component mounts
   useEffect(() => {
@@ -78,9 +168,11 @@ export default function OrderPage() {
   };
 
   return (
-    <div className="Order">
-      <Link href="/Home"> {"<-Back"} </Link>
-      <h1>Order Again</h1>  
+    <>
+      <div className="queue-top-bar">
+        <Link className="return-button" href="/Home">{"< Return"}</Link>
+        <p className="invis">{machine?.machine_id}</p>
+      </div>
 
       <div className="PrevOrders">
         {prevOrders.map((order) => (
@@ -136,6 +228,6 @@ export default function OrderPage() {
           Queue is full. Please wait for an available slot before placing a new order.
         </p>
       )}
-    </div>
+    </>
   );
 }

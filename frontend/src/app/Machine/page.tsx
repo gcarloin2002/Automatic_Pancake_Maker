@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
 
-const secondsThreshold = 5
+const refreshRate = 5000
+const secondsThreshold = 10
 const delay = process.env.NEXT_PUBLIC_DELAY
 
 interface Machine {
@@ -20,7 +21,7 @@ interface Machine {
   machine_zip_code: string;
   machine_timestamp: string;
   machine_temperature: number;
-  machine_batter: boolean;
+  machine_batter: number;
 }
 
 export default function MachinePage() {
@@ -29,6 +30,7 @@ export default function MachinePage() {
   const router = useRouter();
 
   const machine_id = 1; // Replace with the actual machine ID you want to fetch
+  
 
   useEffect(() => {
     const fetchMachineData = async () => {
@@ -53,7 +55,7 @@ export default function MachinePage() {
 
     fetchMachineData();
 
-    const intervalId = setInterval(fetchMachineData, 1000);
+    const intervalId = setInterval(fetchMachineData, refreshRate);
 
     return () => clearInterval(intervalId);
   }, [machine_id]);
@@ -67,24 +69,27 @@ export default function MachinePage() {
   };
 
   return (
-    <div className="Machine">
-      <h1>Machine Page</h1>  
-      <Link href="/">{"<-Back"}</Link>
-
-      {(secondsApart < secondsThreshold) && machine && (
-        <button className="machine_box" onClick={handleMachineSelect}>
-          <h2>{machine.machine_name}</h2>
-          <p>Network: {machine.machine_network}</p>
-          <p>Location: {machine.machine_street}, {machine.machine_city}, {machine.machine_state} {machine.machine_zip_code}</p>
-          <p>Temperature: {machine.machine_temperature} °C</p>
-          <p>Battery: {machine.machine_batter ? 'Good' : 'Low'}</p>
-          <p>Status: {secondsApart < secondsThreshold ? "ON" : "OFF"}</p>
-        </button>
-      )}
-      {(secondsApart >= secondsThreshold) && (
-        <p>No machines available</p>
-      )}
-      {secondsApart}
-    </div>
+    <>
+      <div className="machine-top-bar">
+        <Link className="return-button" href="/">{"< Return"}</Link>
+      </div>
+      <div className="machine-container">
+        <h1 className="machine-title">Machines</h1>  
+        {(secondsApart < secondsThreshold) && machine && (
+          <button className="machine_box" onClick={handleMachineSelect}>
+            <h1 className="machine-name">{machine.machine_name}</h1>
+            <p className="machine-status">Network: {machine.machine_network}</p>
+            <p className="machine-status">Location: {machine.machine_street}, {machine.machine_city}, {machine.machine_state} {machine.machine_zip_code}</p>
+            <p className="machine-status">Temperature: {machine.machine_temperature} °C</p>
+            <p className="machine-status">Batter: {machine.machine_batter}</p>
+            <p className="machine-status">Status: {secondsApart < secondsThreshold ? "ON" : "OFF"}</p>
+          </button>
+        )}
+        {(secondsApart >= secondsThreshold) && (
+          <p className="no-machines">(No machines available)</p>
+        )}
+      </div>
+      
+    </>
   );
 }
