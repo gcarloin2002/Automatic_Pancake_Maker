@@ -17,9 +17,9 @@ const PrevOrder: React.FC<PrevOrderProps> = ({ amount, size, onSelectOrder }) =>
   };
 
   return (
-    <button className="PrevOrder" onClick={handleClick}>
-        <p>{size}-Inch Pancakes</p>
-        <p>{amount} Count </p>
+    <button className="prev-order" onClick={handleClick}>
+      <p className="prev-order-info">{size}-Inch Pancakes</p>
+      <p className="prev-order-info">{amount} Count </p>
     </button>
   );
 };

@@ -8,3 +8,26 @@
     font-weight: 600;
     font-size: 20px;
 }
+
+
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: white; 
+    border-radius: 3em;
+    border: 2px solid transparent; 
+    background-clip: padding-box;
+}
+
+
+* {
+    scrollbar-width: thin; 
+    scrollbar-color: white transparent;
+}

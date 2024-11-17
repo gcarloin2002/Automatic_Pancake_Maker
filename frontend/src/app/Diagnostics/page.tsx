@@ -119,7 +119,7 @@ export default function DiagnosticsPage() {
 
           <div className="d-box">
             <p className="d-box-title">Batter</p>
-            <p className="d-box-value">{machine?.machine_batter}</p>
+            <p className="d-box-value">{machine?.machine_batter + " g"}</p>
           </div>
 
         </div>

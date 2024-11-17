@@ -58,7 +58,7 @@ export default function OrderPage() {
 
   const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]);
   const [size, setSize] = useState(5);
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(2);
   const [queueLimitExceeded, setQueueLimitExceeded] = useState(false);
   const [showQueueFullMessage, setShowQueueFullMessage] = useState(false); // Tracks if the message should show
   const account_id = Number(session?.user ? (session.user as CustomUser).id : "User");
@@ -169,65 +169,69 @@ export default function OrderPage() {
 
   return (
     <>
-      <div className="queue-top-bar">
+      <div className="order-top-bar">
         <Link className="return-button" href="/Home">{"< Return"}</Link>
         <p className="invis">{machine?.machine_id}</p>
       </div>
 
-      <div className="PrevOrders">
-        {prevOrders.map((order) => (
-          <PrevOrder key={order.ao_id} amount={order.ao_amount} size={order.ao_size} onSelectOrder={handleOrderSelection}/>
-        ))}
-      </div>
-
-      <div className="lower-order-section">
-        <div className="create-new-order">
-          <h1>Create New Order</h1>
-
-          <label htmlFor="sizeDropdown">Select Size</label>
-          <select
-            id="sizeDropdown"
-            value={size}
-            onChange={(e) => setSize(Number(e.target.value))}
-            required
-          >
-            <option value={5}>5 Inch</option>
-            <option value={6}>6 Inch</option>
-            <option value={7}>7 Inch</option>
-          </select>
-
-          <label htmlFor="amountDropdown">Select Amount</label>
-          <select
-            id="amountDropdown"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-            required
-          >
-            <option value={1}>1 Count</option>
-            <option value={2}>2 Count</option>
-            <option value={3}>3 Count</option>
-            <option value={4}>4 Count</option>
-            <option value={5}>5 Count</option>
-          </select>
-
+      <div className="order-container">
+        <h1 className="order-title">Order Again</h1>
+        <div className="prev-orders">
+          <div className="prev-orders-container">
+            {prevOrders.map((order) => (
+              <PrevOrder key={order.ao_id} amount={order.ao_amount} size={order.ao_size} onSelectOrder={handleOrderSelection}/>
+            ))}
+          </div>
         </div>
 
-        <div className="finalize-order">
-          <h1>Final Order</h1>
-          <p>{size}-Inch, {amount} Count</p>
+        
+        <div className="lower-order-section">
+          <div className="create-new-order">
+            <h1>Create New Order</h1>
+
+            <label htmlFor="sizeDropdown">Select Size</label>
+            <select
+              id="sizeDropdown"
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              required
+            >
+              <option value={5}>5 Inch</option>
+              <option value={6}>6 Inch</option>
+              <option value={7}>7 Inch</option>
+            </select>
+
+            <label htmlFor="amountDropdown">Select Amount</label>
+            <select
+              id="amountDropdown"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              required
+            >
+              <option value={2}>2 Count</option>
+              <option value={4}>4 Count</option>
+              <option value={6}>6 Count</option>
+            </select>
+
+          </div>
+
+          <div className="finalize-order">
+            <h1>Final Order</h1>
+            <p>{size}-Inch, {amount} Count</p>
+          </div>
         </div>
+
+        <button onClick={confirmButtonClick}>
+          Confirm Order
+        </button>
+
+        {/* Display the "Queue is full" message only if the button was clicked and the queue limit is exceeded */}
+        {showQueueFullMessage && queueLimitExceeded && (
+          <p style={{ color: 'red', marginTop: '10px' }}>
+            Queue is full. Please wait for an available slot before placing a new order.
+          </p>
+        )}
       </div>
-
-      <button onClick={confirmButtonClick}>
-        Confirm Order
-      </button>
-
-      {/* Display the "Queue is full" message only if the button was clicked and the queue limit is exceeded */}
-      {showQueueFullMessage && queueLimitExceeded && (
-        <p style={{ color: 'red', marginTop: '10px' }}>
-          Queue is full. Please wait for an available slot before placing a new order.
-        </p>
-      )}
     </>
   );
 }
