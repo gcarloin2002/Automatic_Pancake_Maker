@@ -1,4 +1,17 @@
+:root {
+    --main-blue: #4E95D9;
+    --light-gray: #323232;
+    --gray: #272727;
 
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
 
 
 .Order {
