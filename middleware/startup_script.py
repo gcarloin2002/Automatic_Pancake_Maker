@@ -41,7 +41,7 @@ if __name__ == "__main__":
     # Define the data to update
     data = {
         "machine_network": "TAMU_WIFI",
-        "machine_name": "APM V2",
+        "machine_name": "APM V1",
         "machine_street": "500 Bizzell St",
         "machine_city": "College Station",
         "machine_state": "TX",

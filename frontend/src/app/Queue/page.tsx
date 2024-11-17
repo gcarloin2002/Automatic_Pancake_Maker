@@ -50,6 +50,7 @@ interface Machine {
   machine_timestamp: string;
   machine_temperature: number;
   machine_batter: number;
+  machine_mode: string;
 }
 
 const machine_id = 1; // Example machine_id

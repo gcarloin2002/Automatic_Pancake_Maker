@@ -22,6 +22,7 @@ interface Machine {
   machine_timestamp: string;
   machine_temperature: number;
   machine_batter: number;
+  machine_mode: string;
 }
 
 export default function MachinePage() {

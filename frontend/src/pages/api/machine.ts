@@ -11,6 +11,7 @@ interface Machine {
     machine_timestamp: string;
     machine_temperature: number;
     machine_batter: number;
+    machine_mode: string;
   }
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
