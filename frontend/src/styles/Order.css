@@ -153,6 +153,10 @@ html, body {
     margin: 25px 40px 0px 0px;
 }
 
+.confirm-button:hover {
+    cursor: pointer;
+}
+
 
 
 ::-webkit-scrollbar {
