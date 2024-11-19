@@ -133,8 +133,8 @@ export default function OrderPage() {
   }, [account_id]);
 
   const handleOrderSelection = (selectedSize: number, selectedAmount: number) => {
-    setSize(selectedSize);
     setAmount(selectedAmount);
+    setSize(selectedSize);
   };
 
   const confirmButtonClick = async () => {
@@ -188,43 +188,48 @@ export default function OrderPage() {
         
         <div className="lower-order-section">
           <div className="create-new-order">
-            <h1>Create New Order</h1>
+            <h1 className="order-title">Create New Order</h1>
 
-            <label htmlFor="sizeDropdown">Select Size</label>
-            <select
-              id="sizeDropdown"
-              value={size}
-              onChange={(e) => setSize(Number(e.target.value))}
-              required
-            >
-              <option value={5}>5 Inch</option>
-              <option value={6}>6 Inch</option>
-              <option value={7}>7 Inch</option>
-            </select>
+            <div className="order-elements">
 
-            <label htmlFor="amountDropdown">Select Amount</label>
-            <select
-              id="amountDropdown"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              required
-            >
-              <option value={2}>2 Count</option>
-              <option value={4}>4 Count</option>
-              <option value={6}>6 Count</option>
-            </select>
-
-          </div>
-
-          <div className="finalize-order">
-            <h1>Final Order</h1>
-            <p>{size}-Inch, {amount} Count</p>
+              <div className="element-group">
+                <label className="element-label" htmlFor="sizeDropdown">Size:</label>
+                <select
+                  className="order-dropdown"
+                  id="sizeDropdown"
+                  value={size}
+                  onChange={(e) => setSize(Number(e.target.value))}
+                  required
+                >
+                  <option value={5}>5 Inch</option>
+                  <option value={6}>6 Inch</option>
+                  <option value={7}>7 Inch</option>
+                </select>
+              </div>
+            
+              <div className="element-group">
+                <label className="element-label" htmlFor="amountDropdown">Amount:</label>
+                <select
+                  className="order-dropdown"
+                  id="amountDropdown"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  required
+                >
+                  <option value={2}>2 Count</option>
+                  <option value={4}>4 Count</option>
+                  <option value={6}>6 Count</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
-        <button onClick={confirmButtonClick}>
-          Confirm Order
-        </button>
+        <div className="confirm-button-container">
+          <button className="confirm-button" onClick={confirmButtonClick}>
+            Confirm Order
+          </button>
+        </div>
 
         {/* Display the "Queue is full" message only if the button was clicked and the queue limit is exceeded */}
         {showQueueFullMessage && queueLimitExceeded && (
