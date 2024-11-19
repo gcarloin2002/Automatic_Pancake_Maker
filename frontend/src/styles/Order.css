@@ -6,6 +6,7 @@
 }
 
 html, body {
+    background-color: var(--gray);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -82,23 +83,75 @@ html, body {
 
 
 .create-new-order {
-    height: 350px;
     width: 100%;
-    border: 1px solid black;
+    border: 4px solid var(--main-blue);
     padding: 10px;
     margin: 10px 10px;
-    border-radius: 5px;
+    border-radius: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.finalize-order {
-    height: 350px;
-    width: 100%;
-    border: 1px solid black;
+
+
+
+.order-elements {
+    display: flex;
+    flex-direction: row;
+    margin: 40px 0px 30px 0px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 30px;
+}
+
+
+.element-group {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.element-label {
+    color: #ffffff;
+    font-size: 28px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+
+}
+
+.order-dropdown {
+    margin: 5px;
+    height: 50px;
+    border-radius: 5em;
     padding: 10px;
-    margin: 10px 10px;
-    border-radius: 5px;
+    color: var(--main-blue);
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
 }
 
+.confirm-button-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.confirm-button {
+    width: 240px;
+    padding: 15px;
+    background-color: var(--main-blue);
+    border: none;
+    border-radius: 2em;
+    color: #ffffff;
+    font-size: 28px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin: 25px 40px 0px 0px;
+}
 
 
 
