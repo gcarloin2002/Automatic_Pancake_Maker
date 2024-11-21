@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the virtual environment
-VENV_PATH="~/Documents/Automatic_Pancake_Maker/middleware/servo_env"
+VENV_PATH="/home/APM/Documents/Automatic_Pancake_Maker/middleware/servo_env"
 
 # Activate the virtual environment
 echo "Activating virtual environment: $VENV_PATH"

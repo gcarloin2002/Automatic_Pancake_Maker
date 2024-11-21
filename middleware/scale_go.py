@@ -19,7 +19,7 @@ print("Scale is ready! Continuously printing weight readings...")
 try:
     while True:
         # Get weight in grams
-        weight = hx.get_weight_mean(10)  # Average over 10 readings for stability
+        #weight = hx.get_weight_mean(10)  # Average over 10 readings for stability
         weight = hx.get_raw_data_mean()
         print("weight is", weight)
         difference = abs(weight) - abs(start_raw)
