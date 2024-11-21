@@ -1,0 +1,8 @@
+
+Forever While:
+
+    Get temperature value
+
+    Get weight value
+
+    run the function from 'startup_script.py' with the temperature and weight values
