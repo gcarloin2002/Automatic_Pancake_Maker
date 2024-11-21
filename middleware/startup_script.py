@@ -48,7 +48,6 @@ if __name__ == "__main__":
         "machine_zip_code": "77840",
         "machine_temperature": 1.23,
         "machine_batter": 5.67,
-        "machine_mode": "Work"
     }
 
     interval_seconds = 5
