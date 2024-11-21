@@ -1,3 +1,10 @@
+
+While temperature isn't hot enough
+	
+	Wait for temperature to get hot
+
+
+
 Forever While:
 
 	If there's an order:
@@ -24,4 +31,4 @@ Forever While:
 
 	
 	If no order:
-skip
+		skip
