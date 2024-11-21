@@ -1,34 +1,45 @@
 
-While temperature isn't hot enough
-	
-	Wait for temperature to get hot
+Forever While: 
+
+	Check what the mode is
+	Save the mode variable
+
+
+	If the mode is 'Work':
+
+
+		While temperature isn't hot enough
+			
+			Wait for temperature to get hot
+
+		Forever While:
+
+			If there's an order:
+				
+				Change most recent order status to 'In Progress'
+				
+				Get amount of pancakes
+				
+				For the amount of pancakes:
+				
+					Spray Oil
+					
+					Dispense Batter
+					
+					Wait to Cook
+					
+					Flip
+					
+					Repeat
+					
+					
+				Change most recent order status to 'Complete'
+				
+			
+			If no order:
+				skip
 
 
 
-Forever While:
-
-	If there's an order:
-		
-		Change most recent order status to 'In Progress'
-		
-		Get amount of pancakes
-		
-		For the amount of pancakes:
-		
-			Spray Oil
-			
-			Dispense Batter
-			
-			Wait to Cook
-			
-			Flip
-			
-			Repeat
-			
-			
-		Change most recent order status to 'Complete'
-			
-
-	
-	If no order:
-		skip
+	If the mode is 'Clean':
+		Run pump infinitely
