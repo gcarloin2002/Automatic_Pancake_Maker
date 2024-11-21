@@ -122,8 +122,12 @@ html, body {
     background-color: #61B1FE;
 }
 
-.home-button-4 {
+.home-button-4-clean {
     background-color: #88c5fd;
+}
+
+.home-button-4-work{
+    background-color: #e0b34a;
 }
 
 

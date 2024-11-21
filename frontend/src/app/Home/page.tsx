@@ -12,7 +12,7 @@ import order_icon from '../../assets/order-icon.png';
 import queue_icon from '../../assets/queue-icon.png';
 import diagnostics_icon from '../../assets/diagnostics-icon.png';
 import clean_icon from '../../assets/clean-icon.png';
-import { getMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
+import { getMachineById, updateMachineById, convertToDatabaseFormat, calculateSecondsApart } from '@/pages/api/machine';
 
 const refreshRate = 5000;
 const secondsThreshold = 10;
@@ -120,9 +120,46 @@ export default function HomePage() {
     router.push('/Diagnostics');
   };
 
-  const clean_click = () => {
-    console.log("clean clicked");
+  const clean_click = async () => {
+    if (!machine) {
+      console.error("Machine data is not available.");
+      return;
+    }
+  
+    try {
+      // Fetch the most recent machine data
+      const currentMachine = await getMachineById(machine_id);
+      if (!currentMachine) {
+        console.error("Failed to fetch the current machine data.");
+        return;
+      }
+  
+      // Toggle the machine_mode
+      const newMode = currentMachine.machine_mode === "Clean" ? "Work" : "Clean";
+  
+      // Create an updated machine object with only the machine_mode changed
+      const updatedMachine = {
+        ...currentMachine,
+        machine_mode: newMode,
+      };
+  
+      // Update the machine in the backend
+      const isUpdated = await updateMachineById(machine_id, updatedMachine);
+  
+      if (isUpdated) {
+        console.log(`Machine mode updated to ${newMode}`);
+        // Refresh the local state with the new machine data
+        setMachine(updatedMachine);
+        setMode(newMode);
+      } else {
+        console.error("Failed to update machine mode.");
+      }
+    } catch (error) {
+      console.error("Error toggling machine mode:", error);
+    }
   };
+  
+  
 
   return (
     <>
@@ -156,7 +193,10 @@ export default function HomePage() {
             </div>
             <h1 className="home-button-label">Diagnostics</h1>
           </button>
-          <button className="home-button home-button-4" onClick={clean_click}>
+          <button 
+            className={`home-button ${mode === "Clean" ? "home-button-4-clean" : "home-button-4-work"}`} 
+            onClick={clean_click}
+          >
             <div className="home-img-container">
               <Image src={clean_icon} alt="Logo" layout="responsive" objectFit="contain" />
             </div>
