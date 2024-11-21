@@ -43,11 +43,38 @@ export async function getMachineById(machine_id: number): Promise<Machine | null
       return null; // Return null in case of any error
     }
   }
+
+
+
+  export async function updateMachineById(machine_id: number, updatedData: Partial<Machine>): Promise<boolean> {
+    try {
+      // API endpoint to update machine details by machine_id
+      const response = await fetch(`${baseUrl}/api/machine/${machine_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData), // Send the updated data as JSON
+      });
+  
+      // Check if the response is successful
+      if (response.ok) {
+        console.log(`Machine data updated successfully for machine_id=${machine_id}`);
+        return true; // Indicate success
+      } else {
+        console.error(`Failed to update machine data. Status code: ${response.status}, Response: ${response.statusText}`);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error('Error updating machine data:', error);
+      return false; // Return false in case of any error
+    }
+  }
   
 
 
 
-export function calculateSecondsApart(timestampString: string): number {
+  export function calculateSecondsApart(timestampString: string): number {
     // Parse the input timestamp string into a Date object
     const timestampDate = new Date(timestampString);
     
