@@ -92,7 +92,37 @@ router.get('/machine/:machine_id', async (req, res) => {
   }
 });
 
+// Update the status of an order by ao_id
+router.put('/order/:ao_id', async (req, res) => {
+  const { ao_id } = req.params; // Get ao_id from URL parameters
+  const { ao_status } = req.body; // Get the new status from request body
 
+  // Validate that ao_status is provided
+  if (!ao_status) {
+    return res.status(400).json({ error: "ao_status is required" });
+  }
+
+  try {
+    // Update the status of the order in the database
+    const updatedOrder = await db.oneOrNone(
+      `UPDATE account_order 
+       SET ao_status = $1 
+       WHERE ao_id = $2 
+       RETURNING *`,
+      [ao_status, ao_id]
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: `Order with ao_id ${ao_id} not found` });
+    }
+
+    // Respond with the updated order
+    res.status(200).json(updatedOrder);
+  } catch (err) {
+    console.error('Error updating order status:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 
