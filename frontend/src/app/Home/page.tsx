@@ -193,7 +193,7 @@ export default function HomePage() {
             </div>
             <h1 className="home-button-label">Diagnostics</h1>
           </button>
-          {session?.user?.username === "admin" && (
+          {(session?.user ? (session.user as CustomUser).username : "User") === "admin" && (
           <button
             className={`home-button ${mode === "Clean" ? "home-button-4-clean" : "home-button-4-work"}`}
             onClick={clean_click}
