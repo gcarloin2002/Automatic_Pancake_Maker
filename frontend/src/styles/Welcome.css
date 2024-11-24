@@ -78,10 +78,12 @@ html, body {
 .collage-image-container {
     width: clamp(300px, 20vw, 800px);
     margin: 40px;
-
-
+    transition: 0.1s ease-in-out;
 }
 
+.collage-image-container:hover {
+    transform: scale(1.1);
+}
 
 
 ::-webkit-scrollbar {
