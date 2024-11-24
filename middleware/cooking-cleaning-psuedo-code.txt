@@ -23,6 +23,10 @@ Forever While:
 				For the amount of pancakes:
 				
 					Spray Oil
+
+					Check if there's enough Batter
+
+						If not, wait till rservoir is filled
 					
 					Dispense Batter
 					
