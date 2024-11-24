@@ -3,13 +3,13 @@ import Image from 'next/image';
 import logo from '../assets/logo.png';
 
 // Import collage images from assets
-import collage1 from '../assets/placeholder.png';
-import collage2 from '../assets/placeholder.png';
-import collage3 from '../assets/placeholder.png';
-import collage4 from '../assets/placeholder.png';
-import collage5 from '../assets/placeholder.png';
-import collage6 from '../assets/placeholder.png';
-import collage7 from '../assets/placeholder.png';
+import collage1 from '../assets/gallery-1.png';
+import collage2 from '../assets/gallery-2.png';
+import collage3 from '../assets/gallery-3.png';
+import collage4 from '../assets/gallery-4.png';
+import collage5 from '../assets/gallery-5.png';
+import collage6 from '../assets/gallery-6.png';
+import collage7 from '../assets/gallery-7.png';
 import collage8 from '../assets/placeholder.png';
 
 import '../styles/Welcome.css';
