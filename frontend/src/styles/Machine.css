@@ -31,10 +31,12 @@ html, body {
     border-radius: 3em;
     width: 300px;
     height: 300px;
+    transition: 0.1s ease-in-out;
 }
 
-.machine_box {
+.machine_box:hover {
     cursor: pointer;
+    transform: scale(1.05);
 }
 
 .return-button {
