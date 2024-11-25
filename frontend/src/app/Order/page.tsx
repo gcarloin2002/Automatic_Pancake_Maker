@@ -60,8 +60,15 @@ export default function OrderPage() {
   const [prevOrders, setPrevOrders] = useState<PrevOrderData[]>([]);
   const [size, setSize] = useState(5);
   const [amount, setAmount] = useState(2);
+
+  
+  const [machineModeWork, setMachineWorkMode] = useState(false); // Set machineWorkMode to false
+  const [showModeFullMessage, setShowModeFullMessage] = useState(false); // Show the mode warning message
+
   const [queueLimitExceeded, setQueueLimitExceeded] = useState(false);
   const [showQueueFullMessage, setShowQueueFullMessage] = useState(false); // Tracks if the message should show
+
+
   const account_id = Number(session?.user ? (session.user as CustomUser).id : "User");
 
 
@@ -139,13 +146,22 @@ export default function OrderPage() {
 
   const confirmButtonClick = async () => {
     const queue = await fetchQueue(machine_id);
+
+
+    if (machine?.machine_mode === "Clean") {
+      setMachineWorkMode(true); // Set machineWorkMode to false
+      setShowModeFullMessage(true); // Show the mode warning message
+      return;
+    }
+  
     
     // Check if queue limit is exceeded
-    if (queue && queue.length >= 5) {
+    else if (queue && queue.length >= 5) {
       setQueueLimitExceeded(true);
       setShowQueueFullMessage(true); // Show the message if queue is full
       return;
     }
+
 
     // Proceed with creating a new order if the queue limit is not exceeded
     const orderData = {
@@ -231,12 +247,18 @@ export default function OrderPage() {
           </button>
         </div>
 
-        {/* Display the "Queue is full" message only if the button was clicked and the queue limit is exceeded */}
+
         {showQueueFullMessage && queueLimitExceeded && (
           <p style={{ color: 'red', marginTop: '10px' }}>
             Queue is full. Please wait for an available slot before placing a new order.
           </p>
         )}
+
+        {showModeFullMessage && machineModeWork && (
+          <p style={{ color: 'red', marginTop: '10px' }}>
+            Machine is in cleaning mode.
+          </p>
+        )}    
       </div>
     </>
   );

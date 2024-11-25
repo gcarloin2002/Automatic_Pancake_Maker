@@ -193,8 +193,9 @@ export default function HomePage() {
             </div>
             <h1 className="home-button-label">Diagnostics</h1>
           </button>
-          <button 
-            className={`home-button ${mode === "Clean" ? "home-button-4-clean" : "home-button-4-work"}`} 
+          {(session?.user ? (session.user as CustomUser).username : "User") === "admin" && (
+          <button
+            className={`home-button ${mode === "Clean" ? "home-button-4-clean" : "home-button-4-work"}`}
             onClick={clean_click}
           >
             <div className="home-img-container">
@@ -202,6 +203,7 @@ export default function HomePage() {
             </div>
             <h1 className="home-button-label">{mode} Mode</h1>
           </button>
+        )}
         </div>
       </div>
     </>

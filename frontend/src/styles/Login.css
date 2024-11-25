@@ -137,10 +137,12 @@ html, body {
     width: 150px;
     height: fit-content;
     white-space: nowrap;
+    transition: 0.1s ease-in-out;
 }
 
 .login-button:hover {
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 
