@@ -19,13 +19,22 @@ def update_machine_data_repeatedly(base_url, machine_id, interval_seconds):
 
     while True:
         try:
-            # Fetch current machine data using the GET request
+
             get_response = requests.get(url)
             
             if get_response.status_code == 200:
-                current_machine_data = get_response.json()  # Parse JSON response
+                current_machine_data = get_response.json() 
 
-                headers = {'Content-Type': 'application/json'}  # Explicitly set headers
+
+                # Retrieve temperature data
+                current_machine_data["machine_temperature"] = 5.67
+
+                # Retrieve batter data
+                current_machine_data["machine_batter"] = 1.24
+
+
+
+                headers = {'Content-Type': 'application/json'} 
                 
                 # Send the PUT request with the current (or modified) data
                 put_response = requests.put(url, json=current_machine_data, headers=headers)
@@ -39,7 +48,7 @@ def update_machine_data_repeatedly(base_url, machine_id, interval_seconds):
         except Exception as e:
             print(f"Error occurred while processing machine data: {e}")
 
-        time.sleep(interval_seconds)  # Wait for the specified interval before the next call
+        time.sleep(interval_seconds) 
 
 if __name__ == "__main__":
 
