@@ -2,6 +2,8 @@ import requests
 import time
 import os
 from dotenv import load_dotenv
+from concurrent.futures import ThreadPoolExecutor
+
 
 
 def update_machine_data_repeatedly(base_url, machine_id, data, interval_seconds):
@@ -42,8 +44,8 @@ def process_orders_repeatedly(base_url, machine_id, interval_seconds):
         machine_id (int): The ID of the machine to process orders for.
         interval_seconds (int): Interval in seconds between each fetch/process cycle.
     """
-    orders_url = f"{base_url}/machine/{machine_id}"
-    update_order_url_template = f"{base_url}/order/{{}}"
+    orders_url = f"{base_url}/api/account_order/machine/{machine_id}"
+    update_order_url_template = f"{base_url}/api/account_order/order/{{}}"
 
     while True:
         try:
@@ -51,7 +53,7 @@ def process_orders_repeatedly(base_url, machine_id, interval_seconds):
             response = requests.get(orders_url)
             if response.status_code == 200:
                 orders = response.json()
-
+                
                 # Process "In Progress" orders first
                 in_progress_order = next((o for o in orders if o['ao_status'] == 'In Progress'), None)
                 if in_progress_order:
@@ -92,7 +94,7 @@ def process_orders_repeatedly(base_url, machine_id, interval_seconds):
 
                         # Simulate order processing
                         print(f"Processing order {ao_id}...")
-                        time.sleep(2)  # Simulate processing time
+                        time.sleep(10)  # Simulate processing time
 
                         # Update the order status to "Complete"
                         complete_response = requests.put(
@@ -140,8 +142,9 @@ if __name__ == "__main__":
 
     interval_seconds = 5
 
-    # Call the function to repeatedly update the machine with ID 1 every 5 seconds
-    update_machine_data_repeatedly(backend_url, 1, data, interval_seconds)
-
-    # Process orders repeatedly for the same machine
-    process_orders_repeatedly(backend_url, 1, interval_seconds)
+    # Use ThreadPoolExecutor to run both functions in parallel
+    with ThreadPoolExecutor() as executor:
+        # Call the function to repeatedly update the machine with ID 1 every 5 seconds
+        executor.submit(update_machine_data_repeatedly, backend_url, 1, data, interval_seconds)
+        # Process orders repeatedly for the same machine
+        executor.submit(process_orders_repeatedly, backend_url, 1, interval_seconds)
