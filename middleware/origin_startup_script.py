@@ -15,13 +15,12 @@ def update_machine_data_repeatedly(base_url, machine_id, interval_seconds):
         interval_seconds (int): Interval in seconds between each update request.
 
     """
-    get_url = f"{base_url}/api/machine/{machine_id}"
-    put_url = f"{base_url}/api/machine/{machine_id}"
+    url = f"{base_url}/api/machine/{machine_id}"
 
     while True:
         try:
             # Fetch current machine data using the GET request
-            get_response = requests.get(get_url)
+            get_response = requests.get(url)
             
             if get_response.status_code == 200:
                 current_machine_data = get_response.json()  # Parse JSON response
@@ -29,7 +28,7 @@ def update_machine_data_repeatedly(base_url, machine_id, interval_seconds):
                 headers = {'Content-Type': 'application/json'}  # Explicitly set headers
                 
                 # Send the PUT request with the current (or modified) data
-                put_response = requests.put(put_url, json=current_machine_data, headers=headers)
+                put_response = requests.put(url, json=current_machine_data, headers=headers)
                 
                 if put_response.status_code == 200:
                     print(f"Machine data updated successfully for machine_id={machine_id}")
