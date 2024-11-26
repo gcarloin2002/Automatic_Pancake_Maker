@@ -47,8 +47,8 @@ pi.set_mode(OILPIN, pigpio.OUTPUT)
 pi.set_mode(PUMPPIN, pigpio.OUTPUT)
 
 # high on oil means off, low on pump means off
+# pi.write(OILPIN, 0)
 pi.write(OILPIN, 1)  # Set pin high (1) or low (0)
-pi.write(OILPIN, 0)
 pi.write(PUMPPIN, 0)
 
 def getTemp():
@@ -62,7 +62,7 @@ def getTemp():
 
     print("Ambient Temperature:", ambientTemp, "°F")
     print("Target Temperature:", targetTemp,"°F")
-    return [ambientTemp, targetTemp]
+    return targetTemp
     sleep(2)
 
 def getWeight():
@@ -128,7 +128,7 @@ def flip(delay):
     sweep(0.01, HOTPLATE_ANGLE)
 
 def sequence():
-    oil(10)    # oil for 2 seconds
+    oil(7)    # oil for 2 seconds
     sleep(2)
 
     # double pump
@@ -137,7 +137,7 @@ def sequence():
     pump(10)
 
     # cook
-    half_min = 3*2
+    half_min = 3*2 + 1
     for i in range(half_min):
          sleep(30)
          print(f"{(i+1)*30} seconds into cook...")
@@ -149,6 +149,7 @@ def sequence():
 # gently set down
 sweep(0.01, HOTPLATE_ANGLE)
 print("INIT COMPLETE")
+# oilToggle()
 # oilToggle()
 
 ###### MAIN SEQUENCE ######
