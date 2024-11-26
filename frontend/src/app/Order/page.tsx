@@ -217,9 +217,7 @@ export default function OrderPage() {
                   onChange={(e) => setSize(Number(e.target.value))}
                   required
                 >
-                  <option value={5}>5 Inch</option>
-                  <option value={6}>6 Inch</option>
-                  <option value={7}>7 Inch</option>
+                  <option value={3}>3 Inch</option>
                 </select>
               </div>
             

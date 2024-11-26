@@ -52,6 +52,8 @@ def update_machine_data_repeatedly(base_url, machine_id, interval_seconds):
             print(f"Error occurred while processing machine data: {e}")
 
         time.sleep(interval_seconds) 
+   
+
 
 
 def process_orders_repeatedly(base_url, machine_id, interval_seconds):
