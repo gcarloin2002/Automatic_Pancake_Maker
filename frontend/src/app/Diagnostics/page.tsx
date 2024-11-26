@@ -119,12 +119,17 @@ export default function DiagnosticsPage() {
           </div>
 
           <div className="d-box">
-            <p className="d-box-title">Batter</p>
+            <p className="d-box-title">
+              {Number(machine?.machine_batter) - 100 < 300 ? "Batter (Low)" : `Batter ${machine?.machine_batter} g`}
+            </p>
             <p className="d-box-value">{machine?.machine_batter + " g"}</p>
           </div>
-
         </div>
       </div>
     </>
   );
 }
+
+
+
+// If current - 100 is lower than 300, display low batter
