@@ -120,7 +120,7 @@ export default function DiagnosticsPage() {
 
           <div className="d-box">
             <p className="d-box-title">
-              {Number(machine?.machine_batter) - 100 < 300 ? "Batter (Low)" : `Batter ${machine?.machine_batter} g`}
+              {Number(machine?.machine_batter) - 100 < 300 ? "Batter (Low)" : "Batter"}
             </p>
             <p className="d-box-value">{machine?.machine_batter + " g"}</p>
           </div>
